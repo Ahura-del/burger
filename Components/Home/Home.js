@@ -1,10 +1,13 @@
-import { Icon} from 'native-base';
 import React, {useEffect, useState,Fragment} from 'react';
 import {View, Text, Image, TouchableOpacity , ActivityIndicator} from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import {faUser , faShoppingCart , faThLarge, faHome} from '@fortawesome/free-solid-svg-icons'
+import {faUser , faShoppingCart , faThLarge, faHome, faHeart, faBell} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-// import PopularMeal from './popularMeal/PopularMeal';
+import {
+    responsiveScreenFontSize,
+
+  } from 'react-native-responsive-dimensions';
+import PopularMeal from './PopularMeal/PopularMeal';
 // import {useDispatch, useSelector} from 'react-redux';
 // import {addCart, addNotify, delNotify, fetchUser } from '../../Redux';
 // import {withBadge} from 'react-native-elements';
@@ -14,7 +17,7 @@ import NetInfo from "@react-native-community/netinfo";
 
 // import Connection from '../Connection/Connection';
 // import axios from 'axios';
-library.add(faUser,faShoppingCart,faThLarge,faHome)
+library.add(faUser,faShoppingCart,faThLarge,faHome,faHeart,faBell)
 const Home =  ({navigation}) => {
 //   const dispatch = useDispatch();
  
@@ -135,6 +138,7 @@ useEffect(()=>{
   />
   <View
     style={{
+      // height:"100%",
       width: '100%',
       position: 'absolute',
       top: 0,
@@ -144,35 +148,50 @@ useEffect(()=>{
     }}>
     <View
       style={{
+        display:"flex",
         flexDirection: 'row',
-
         justifyContent: 'space-around',
+        alignItems:"center"
       }}>
       <View>
         {/* <H2 style={{marginBottom: 10}}>Explore</H2> */}
-        <Text style={{fontFamily: 'Poppins', fontSize: 18}}>
+        <Text style={{
+          fontFamily: 'Poppins',fontWeight:"600" , color:"#000",fontSize: responsiveScreenFontSize(2.7)}}>
           What would you like to eat?
         </Text>
       </View>
-      <View style={{flexDirection: 'row'}}>
-        <Icon
+      <View style={{
+        alignItems:"center",
+
+        flexDirection: 'row'}}
+        >
+
+      <View >
+      <FontAwesomeIcon icon={faHeart} color='black' size={22} style={{marginRight:15}} />
+
+        {/* <Icon
           type="FontAwesome5"
           name="heart"
           style={{fontSize: 25, marginRight: 15}}
-         
-        />
+          
+        /> */}
         {/* {checkNotify ? ( */}
+        </View>
+        <View >
+
           <TouchableOpacity
-            style={{width: 30, height: 30}}
+            // style={{width: 30, height: 30}}
             onPress={() => {
               navigation.navigate('notify', {
                 title: notifySate.title,
                 desc: notifySate.body,
                 img: notifySate.android.imageUrl,
               });
-
+              
               dispatch(delNotify());
             }}>
+              <FontAwesomeIcon icon={faBell} color='black' size={22} />
+
             {/* <BadgeIconNotify
               type="FontAwesome"
               name="bell"
@@ -188,9 +207,10 @@ useEffect(()=>{
               name="bell"
               style={{fontSize: 25}}
             />
-          </TouchableOpacity>
-        )} */}
+            </TouchableOpacity>
+          )} */}
       </View>
+          </View>
     </View>
   </View>
 </View>
@@ -216,7 +236,7 @@ useEffect(()=>{
         marginLeft: 'auto',
       }}>
       <Text
-        style={{color: '#FEB500', fontFamily: 'Poppins', fontSize: 14}}
+        style={{color: '#FEB500', fontFamily: 'Poppins', fontSize: responsiveScreenFontSize(1.7)}}
         
         >
         Popular Today
@@ -224,10 +244,11 @@ useEffect(()=>{
 
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('category');
+          alert('hi')
+          // navigation.navigate('category');
         }}>
         <Text
-          style={{color: '#fff', fontFamily: 'Poppins', fontSize: 14}}>
+          style={{color: '#fff', fontFamily: 'Poppins', fontSize: responsiveScreenFontSize(1.7)}}>
           See All
         </Text>
       </TouchableOpacity>
@@ -271,14 +292,24 @@ useEffect(()=>{
       width: '100%',
       justifyContent: 'space-around',
       flexDirection: 'row',
-      paddingTop: 12,
-      paddingBottom: 12,
+      paddingVertical:10,
+      alignItems:"center",
     }}>
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('home');
-      }}>
-               <FontAwesomeIcon icon={faHome} color='black' size={26} />
+      }}
+      style={{
+        padding: 10,
+        
+        fontSize: 20,
+        borderRadius: 10,
+        // color: '#FEB500',
+        backgroundColor: '#000',
+      }}
+      >
+               <FontAwesomeIcon icon={faHome} color='#FEB500' size={26} />
+               </TouchableOpacity>
 
       {/* <Icon
         type="FontAwesome5"
@@ -291,13 +322,13 @@ useEffect(()=>{
           color: '#FEB500',
         }}
       /> */}
-    </TouchableOpacity>
 
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('category');
       }}>
      <FontAwesomeIcon icon={faThLarge} color='black' size={26} />
+     </TouchableOpacity>
 
       {/* <Icon
         type="FontAwesome5"
@@ -309,7 +340,6 @@ useEffect(()=>{
           color: '#000',
         }}
       /> */}
-    </TouchableOpacity>
 
     {/* {stateCart.length !== 0 ? ( */}
       {/* <TouchableOpacity onPress={() => navigation.navigate('cart')}> */}

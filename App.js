@@ -1,6 +1,6 @@
 import React from 'react';
 import {NativeBaseProvider} from 'native-base'
-import Singup from './Components/Home/Home'
+import Singup from './Components/Cart/Cart/Cart'
 const App = () => {
   return (
     <NativeBaseProvider>
