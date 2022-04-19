@@ -24,14 +24,16 @@ const Login = ({navigation}) => {
     if (email == '') {
       Toast.show({
         title: 'Please Enter The Email!',
-        placement:'bottom',
+        placement:'top',
+        bg:"red.600",
         duration: 2000,
         variant:'solid'
       });
       return;
     } else {
         console.log(email , 'back')
-    //   axios.get(`http://papaberger.ir/api/user/${email}`)
+        navigation.navigate('Password')
+        //   axios.get(`http://papaberger.ir/api/user/${email}`)
     //   .then(res=>{
     //     if(res.status === 200){
     //       navigation.navigate('pass',{email , photo: res.data.profilePicture });
@@ -101,13 +103,13 @@ const Login = ({navigation}) => {
             style={{width: '33%', height: '100%'}}
           />
           <View>
-            <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2.5)}}>
+            <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2.7)}}>
               Sing in
             </Text>
-            <Text style={{color: '#fff', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2.3)}}>Account</Text>
-            <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.9)}}>
+            <Text style={{color: '#fff', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2)}}>Account</Text>
+            <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.7)}}>
               Don't have account?{' '}
-              <Text onPress={() => {navigation.navigate("singup")}}>Sing up</Text>
+              <Text onPress={() => navigation.navigate("Singup")}>Sing up</Text>
             </Text>
           </View>
         </View>
@@ -128,7 +130,8 @@ const Login = ({navigation}) => {
             <TextInput
               placeholder="hello@example.com"
               style={{color: '#e1e1e1', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.7)}}
-              placeholderTextColor="#fff"
+              placeholderTextColor="#ccc"
+              autoFocus={true}
               onChangeText={e => setEmail(e)}
               keyboardType="email-address"
             />

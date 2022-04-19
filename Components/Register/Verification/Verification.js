@@ -13,9 +13,9 @@ import CodeInput from 'react-native-confirmation-code-input';
 // import axios from 'axios';
 const Verification = ({navigation, route}) => {
 //   const dispatch = useDispatch();
-//   const code = route.params.code;
+  const verifyCode = route.params.code;
 
-  const stCode = String(1234);
+  const stCode = String(verifyCode);
   const inputRef = useRef('codeInputRef2');
 
 //   const userEmail = auth().currentUser.email;
@@ -30,9 +30,9 @@ const Verification = ({navigation, route}) => {
 //       console.log(error);
 //     }
 //   }, []);
-  const maxNum = 9999;
-  const minNum = 1000;
-  const randomNum = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+  // const maxNum = 9999;
+  // const minNum = 1000;
+  // const randomNum = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
 
 //   const request = {
 //     "id": randomNum,
@@ -44,7 +44,8 @@ const Verification = ({navigation, route}) => {
 //   };
 
   const onFinishCheckingCode2 = async (code) => {
-      console.log(code , randomNum)
+    console.log(code)
+      // console.log(code , randomNum)
     // if (code) {
     //   try {
     //     const response = await axios.post(
@@ -68,31 +69,31 @@ const Verification = ({navigation, route}) => {
     // }
   };
 
-  let timer = () => {};
-  const [timeLeft, setTimeLeft] = useState(60);
+  // let timer = () => {};
+  // const [timeLeft, setTimeLeft] = useState(60);
 
-  const startTimer = () => {
-    timer = setTimeout(() => {
-      if (timeLeft <= 0) {
-        clearTimeout(timer);
-        return false;
-      }
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-  };
+  // const startTimer = () => {
+  //   timer = setTimeout(() => {
+  //     if (timeLeft <= 0) {
+  //       clearTimeout(timer);
+  //       return false;
+  //     }
+  //     setTimeLeft(timeLeft - 1);
+  //   }, 1000);
+  // };
 
-  useEffect(() => {
-    startTimer();
-    return () => clearTimeout(timer);
-  });
+  // useEffect(() => {
+  //   startTimer();
+  //   return () => clearTimeout(timer);
+  // });
 
-  const start = () => {
-    setTimeLeft(60);
-    clearTimeout(timer);
-    startTimer();
+  // const start = () => {
+  //   setTimeLeft(60);
+  //   clearTimeout(timer);
+  //   startTimer();
 
-    // navigation.navigate('phoneNum');
-  };
+  //   // navigation.navigate('phoneNum');
+  // };
 
   return (
       <View
@@ -165,9 +166,9 @@ const Verification = ({navigation, route}) => {
               justifyContent: 'center',
               marginTop: 20,
             }}>
-            <View style={{  flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{  flexDirection: 'row', justifyContent: 'center',width:"100%"}}>
               <TouchableOpacity
-                onPress={()=>navigation.navigate('phoneNum')}
+                onPress={()=>navigation.navigate('Singup')}
                 style={{
               
                   backgroundColor: '#FEB500',
@@ -177,17 +178,7 @@ const Verification = ({navigation, route}) => {
                 }}>
                 <Text style={{fontFamily: 'Poppins', color: '#000',fontSize:responsiveScreenFontSize(2.0)}}>Back</Text>
               </TouchableOpacity>
-              {timeLeft === 0 ? (
-              <TouchableOpacity  onPress={start}>
-                <Text style={{color: '#FEB500', marginLeft: 20,fontSize:responsiveScreenFontSize(1.7)}}>
-                  Resend code
-                </Text>
-              </TouchableOpacity>
-              ) : (
-              <Text style={{color: '#FEB500', marginLeft: 50 }}>
-                00:{timeLeft}
-              </Text>
-              )}
+              
             </View>
           </View>
         </View>

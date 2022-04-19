@@ -7,7 +7,7 @@ import WelcomePages from './WelcomePages';
 // import { Fragment } from 'react';
 
 // {navigation}
-const Welcome = () => {
+const Welcome = ({navigation}) => {
  const [net , setNet] = useState()
  useEffect(()=>{
   NetInfo.fetch().then(state => {
@@ -16,20 +16,20 @@ const Welcome = () => {
   
  } , [])
   const setDelivery = ()=>{
-      console.log(net)
+      // console.log(net)
+      navigation.navigate('Singup')
     // if(net){
 
-    //   navigation.navigate('singup')
     // }else{
     //   navigation.navigate('connection')
     // }
   }
   const setSingin=()=>{
-    console.log(net)
-
+    navigation.navigate('Login')
+    
+    // console.log(net)
     // if(net){
 
-    //   navigation.navigate('singin')
     // }else{
     //   navigation.navigate('connection')
     // }

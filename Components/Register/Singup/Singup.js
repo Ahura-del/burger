@@ -1,4 +1,5 @@
-import {Button, Toast, Root} from 'native-base';
+import axios from 'axios';
+import {Button, Toast} from 'native-base';
 import React, {useState } from 'react';
 import {View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import {
@@ -8,34 +9,78 @@ import {
 const SingUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [pass, setPass] = useState('');
+  const [password, setPassword] = useState('');
   
   
 
 
- const singUpBtn = async(email1 , password ) => {
+ const singUpBtn = () => {
 
 
-    try{
-    if (email == '' || name == '' || pass == '') {
+    
+    if (email == '' || name == '' || password == '') {
       Toast.show({
-        text: 'Please Fill All Fields',
-        buttonText: 'Ok',
-        type: 'danger',
-        duration: 3000,
+        title: 'Please Fill All Fields',
+        bg:"red.600",
+        placement:'top',
+        duration: 2000,
+        variant:'solid'
+        
       });
       return;
-    } else if (pass.length < 6) {
+    }
+    if (password.length < 6) {
       Toast.show({
-        text: 'Please Enter Password With 6 Character',
-        buttonText: 'Ok',
-        type: 'danger',
-        duration: 3000,
+        title: 'Please Enter Password With 6 Character',
+        bg:"red.600",
+          placement:'top',
+        duration: 2000,
+        variant:'solid'
       });
       return;
-    } else {
-      
-        console.log('back' , email1 , password)
+    }
+   
+      // const data = {
+      //   name,
+      //   email,
+      //   password
+      // }
+  
+      axios.post('http://192.168.1.102:3000/auth/singup' , {
+        name,
+        email,
+        password
+      })
+      .then(res=>{
+        if(res.status === 200){
+          navigation.navigate('Verification',{code:res.data.code})
+          setEmail('')
+          setName('')
+          setPassword('')
+        }
+      })
+      .catch(err=>{
+        Toast.show({
+          title: err.response.data,
+          bg:"red.600",
+          placement:'top',
+          duration: 3000,
+          variant:'solid',
+        });
+      })
+      // console.log(data)
+      // const res = await axios.post('http://localhost:3000/auth/singup' , data ,{headers:{
+      //   'Content-Type':"application/json",
+      //   "Accept":"application/json"
+      // }})
+      // console.log(res)
+      // if(res.status === 200){
+      //   console.log(res , 'try')
+      // }
+   
+    
+  }
+       
     //   const res = await auth()
     //   .createUserWithEmailAndPassword(email1, password )
     //   .then(async(response)=>{
@@ -64,10 +109,8 @@ const SingUp = ({navigation}) => {
         
     //   });
       
-    }
-  }catch(err){console.log(err);}
-  };
-
+    
+  
 
  
 
@@ -120,7 +163,8 @@ const SingUp = ({navigation}) => {
               keyboardType="email-address"
               placeholder="hello@example.com"
               style={{color: '#fff', fontFamily: 'Poppins' , fontSize: responsiveScreenFontSize(1.7)}}
-              placeholderTextColor="#fff"
+              placeholderTextColor="#ccc"
+              autoFocus={true}
               value={email}
               onChangeText={e => {
                 setEmail(e);
@@ -133,7 +177,7 @@ const SingUp = ({navigation}) => {
             <TextInput
               placeholder="Micra Solution"
               style={{color: '#fff', fontFamily: 'Poppins' , fontSize: responsiveScreenFontSize(1.7)}}
-              placeholderTextColor="#fff"
+              placeholderTextColor="#ccc"
               value={name}
               onChangeText={e => {
                 setName(e);
@@ -147,21 +191,21 @@ const SingUp = ({navigation}) => {
               placeholder="********"
               secureTextEntry={true}
               style={{color: '#fff', fontFamily: 'Poppins' , fontSize: responsiveScreenFontSize(1.7)}}
-              placeholderTextColor="#fff"
+              placeholderTextColor="#ccc"
               onChangeText={e => {
-                setPass(e);
+                setPassword(e);
               }}
             />
           </View>
 
           <View style={{alignItems: 'center'}}>
-            <Button size="lg" style={{backgroundColor:'#FEB500'}} onPress={()=>singUpBtn(email , pass)}>
+            <Button size="lg" style={{backgroundColor:'#FEB500'}} onPress={singUpBtn}>
               <Text style={{fontFamily: 'Poppins',fontSize: responsiveScreenFontSize(2),color:"#000" , fontWeight:'500'}}>Sing Up</Text>
             </Button>
           </View>
 
           <View style={{marginTop:10}}>
-          <TouchableOpacity onPress={()=>{navigation.navigate("singin")}}>
+          <TouchableOpacity onPress={()=>{navigation.navigate("Login")}}>
           <Text style={{color:"#fff", fontFamily: 'Poppins', textAlign:"center" , fontSize: responsiveScreenFontSize(2)}}>Have Account?</Text>
           </TouchableOpacity>
           </View>
