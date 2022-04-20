@@ -6,6 +6,11 @@ import Singup from './Components/Register/Singup/Singup'
 import Login from './Components/Register/Login/Login'
 import Password from './Components/Register/Password/Password'
 import Verification from './Components/Register/Verification/Verification'
+import Location from './Components/Location/Location'
+import NewLocation from './Components/Location/NewLocation/NewLocation'
+import Home from './Components/Home/Home'
+
+
 
 import Welcome from './Components/Welcome/Welcome'
 
@@ -14,11 +19,14 @@ const App = () => {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="welcome" screenOptions={{headerShown:false}}>
-        <Stack.Screen name='welcome' component={Welcome} />
+        <Stack.Navigator initialRouteName="Welcome" screenOptions={{headerShown:false}}>
+        <Stack.Screen name='Welcome' component={Welcome} />
         <Stack.Screen name='Singup' component={Singup} />
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Verification' component={Verification} />
+        <Stack.Screen name='Location' component={Location} />
+        <Stack.Screen name='NewLocation' component={NewLocation} />
+        <Stack.Screen name='Home' component={Home} />
 
         <Stack.Screen name='Password' component={Password} />
 

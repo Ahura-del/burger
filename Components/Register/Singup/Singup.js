@@ -53,7 +53,7 @@ const SingUp = ({navigation}) => {
       })
       .then(res=>{
         if(res.status === 200){
-          navigation.navigate('Verification',{code:res.data.code})
+          navigation.navigate('Verification',{code:res.data.code , userId:res.data.id , email})
           setEmail('')
           setName('')
           setPassword('')

@@ -1,20 +1,18 @@
 import React ,{ useEffect, useState } from 'react';
 import { ScrollView} from 'react-native';
-import NetInfo from "@react-native-community/netinfo";
-
+// import NetInfo from "@react-native-community/netinfo";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import WelcomePages from './WelcomePages';
 // import Connection from '../Connection/Connection';
 // import { Fragment } from 'react';
 
 // {navigation}
 const Welcome = ({navigation}) => {
- const [net , setNet] = useState()
- useEffect(()=>{
-  NetInfo.fetch().then(state => {
-    setNet(state.isConnected)
-  });
+
+ 
+  AsyncStorage.getItem('token')
   
- } , [])
+ 
   const setDelivery = ()=>{
       // console.log(net)
       navigation.navigate('Singup')

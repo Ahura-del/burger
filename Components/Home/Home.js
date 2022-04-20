@@ -292,7 +292,7 @@ useEffect(()=>{
       width: '100%',
       justifyContent: 'space-around',
       flexDirection: 'row',
-      paddingVertical:10,
+      paddingVertical:5,
       alignItems:"center",
     }}>
     <TouchableOpacity

@@ -1,19 +1,24 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useRef} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {
     responsiveScreenFontSize,
 
   } from 'react-native-responsive-dimensions';
+  import AsyncStorage from '@react-native-async-storage/async-storage';
 // import AsyncStorage from '@react-native-community/async-storage';
 // import { Toast} from 'native-base';
 // import auth from '@react-native-firebase/auth';
 // import {useDispatch} from 'react-redux';
 // import {fetchUser} from '../../../Redux';
 import CodeInput from 'react-native-confirmation-code-input';
+import axios from 'axios';
+import { Toast } from 'native-base';
 // import axios from 'axios';
 const Verification = ({navigation, route}) => {
 //   const dispatch = useDispatch();
   const verifyCode = route.params.code;
+  const userId = route.params.userId;
+console.log(route.params)
 
   const stCode = String(verifyCode);
   const inputRef = useRef('codeInputRef2');
@@ -43,8 +48,38 @@ const Verification = ({navigation, route}) => {
 //     "phoneNumber": phoneNum.toString(),
 //   };
 
-  const onFinishCheckingCode2 = async (code) => {
-    console.log(code)
+  const onFinishCheckingCode2 = (code) => {
+    if(code){
+      axios.put(`http://192.168.1.102:3000/auth/verify/${userId}` , {verify:true})
+      .then(async(res)=>{
+        if(res.status === 200){
+          console.log(res.data)
+          await AsyncStorage.setItem('token' , res.data.token)
+          await AsyncStorage.setItem('userId' , userId)
+
+          navigation.navigate('Location');
+
+        }
+      })
+      .catch(err=>{
+        console.log(err.message)
+        Toast.show({
+          title: err.response.data,
+          bg:"red.600",
+            placement:'top',
+          duration: 2000,
+          variant:'solid'
+        });
+      })
+    }else{
+      Toast.show({
+        title: 'Code is invalid!',
+        bg:"red.600",
+          placement:'top',
+        duration: 2000,
+        variant:'solid'
+      });
+    }
       // console.log(code , randomNum)
     // if (code) {
     //   try {
@@ -135,8 +170,8 @@ const Verification = ({navigation, route}) => {
               Enter code we just sent via Email to
             </Text>
             <Text style={{marginTop:15,color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2.0)}}>
-                ahuradel@gmail.com
-              {/* +{route.params.codePhone} {route.params.phoneNumber} */}
+              
+              {route.params.email}
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
