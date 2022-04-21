@@ -1,5 +1,5 @@
-import React, {useEffect, useState,Fragment} from 'react';
-import {View, Text, Image, TouchableOpacity , ActivityIndicator} from 'react-native';
+import React, { useState,Fragment} from 'react';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {faUser , faShoppingCart , faThLarge, faHome, faHeart, faBell} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -13,14 +13,16 @@ import PopularMeal from './PopularMeal/PopularMeal';
 // import {withBadge} from 'react-native-elements';
 // import messaging from '@react-native-firebase/messaging';
 // import AsyncStorage from '@react-native-community/async-storage';
-import NetInfo from "@react-native-community/netinfo";
+import {useNetInfo} from "@react-native-community/netinfo";
+import Connection from '../Connection/Connection';
 
 // import Connection from '../Connection/Connection';
 // import axios from 'axios';
 library.add(faUser,faShoppingCart,faThLarge,faHome,faHeart,faBell)
 const Home =  ({navigation}) => {
 //   const dispatch = useDispatch();
- 
+ const netInfo = useNetInfo()
+ console.log(netInfo)
 //   const notifySate = useSelector(state => state.notify.notify);
 //   const checkNotify = 'title' in notifySate;
  
@@ -77,7 +79,7 @@ const Home =  ({navigation}) => {
 //   const BadgeIcon = withBadge(stateCart.length)(Icon);
   // const fetchData = useSelector(state => state.product.homeProduct);
 //   const BadgeIconNotify = withBadge()(Icon);
-  const [isLoading , setisLoading] = useState()
+  // const [isLoading , setisLoading] = useState()
   // useEffect(() => {
   //   const test = [];
 
@@ -107,26 +109,27 @@ const Home =  ({navigation}) => {
 //     fetchItem()
 //   },[])
 
-useEffect(()=>{
-  NetInfo.fetch().then(state => {
-    setisLoading(state.isConnected)
+// useEffect(()=>{
+//   NetInfo.fetch().then(state => {
+//     setisLoading(state.isConnected)
 
-  });
+//   });
   
-},[])
+// },[])
 
  
  const loadingData = ()=>{
-      
+     
         
-  if(!isLoading){
+  if(!netInfo.isConnected){
+
     return (
       <Fragment>
-          <Text>hi</Text>
-      {/* <Connection /> */}
+      <Connection />
       </Fragment>
     )
   }else{
+   
     return (
 <Fragment>
 <View style={{flex: 1, flexDirection: 'column'}}>

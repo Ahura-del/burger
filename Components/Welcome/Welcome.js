@@ -1,7 +1,7 @@
 import React ,{ useEffect, useState } from 'react';
 import { ScrollView} from 'react-native';
 // import NetInfo from "@react-native-community/netinfo";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import WelcomePages from './WelcomePages';
 // import Connection from '../Connection/Connection';
 // import { Fragment } from 'react';
@@ -9,8 +9,6 @@ import WelcomePages from './WelcomePages';
 // {navigation}
 const Welcome = ({navigation}) => {
 
- 
-  AsyncStorage.getItem('token')
   
  
   const setDelivery = ()=>{

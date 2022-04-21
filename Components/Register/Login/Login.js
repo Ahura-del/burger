@@ -5,6 +5,9 @@ import {
     responsiveScreenFontSize,
 
   } from 'react-native-responsive-dimensions';
+  import {useNetInfo} from '@react-native-community/netinfo'
+import axios from 'axios';
+
 // import {launchImageLibrary} from 'react-native-image-picker';
 // import auth from '@react-native-firebase/auth';
 
@@ -13,6 +16,7 @@ import {
 
 
 const Password = ({navigation, route}) => {
+  const netInfo = useNetInfo()
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
@@ -37,7 +41,17 @@ const Password = ({navigation, route}) => {
 
 
   const singInBtn = async () => {
-
+    if(!netInfo.isConnected || netInfo.isConnected === null){
+      Toast.show({
+        title: 'Please connect to the internet',
+        bg:"yellow.500",
+        placement:'top',
+        duration: 2000,
+        variant:'solid'
+        
+      });
+      return;
+    }
 
     if (password === '' || email === "") {
       Toast.show({
@@ -49,7 +63,33 @@ const Password = ({navigation, route}) => {
       });
       return;
     } else {
-        console.log('back',mail, pass)
+      
+        axios.post('http://192.168.1.102:3000/auth/singin' , {email , password})
+        .then(async(res)=>{
+          if(res.status === 200){
+            await AsyncStorage.setItem('token' , res.data.token)
+            await AsyncStorage.setItem('userId' , userId)
+            navigation.navigate('Home')
+            setEmail('')
+            setName('')
+            setPassword('')
+          }
+          if(res.status===201){
+            navigation.navigate('Verification',{code:res.data.code , userId:res.data.id , email})
+            setEmail('')
+            setName('')
+            setPassword('')
+          }
+        })
+        .catch(err=>{
+          Toast.show({
+            title: err.response.data,
+            duration: 3000,
+            bg:"red.600",
+            placement:'bottom',
+            variant:'solid'
+          });
+        })
     //   const res = await auth()
     //     .signInWithEmailAndPassword(mail, pass)
     //     .then(response => {

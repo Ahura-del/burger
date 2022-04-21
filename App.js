@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {NativeBaseProvider} from 'native-base'
@@ -15,28 +15,44 @@ import Home from './Components/Home/Home'
 
 
 import Welcome from './Components/Welcome/Welcome'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const App = () => {
+  const [storage , setStorage]=useState(false)
+  const mountedRef = useRef(true)
+  useEffect(()=>{
+    const getStorage = async ()=>{
+      const asyncStorage = await AsyncStorage.getItem('token')
+      if(asyncStorage.length > 0){
+        setStorage(true)
+      }else{
+        setStorage(false)
+      }
+    }
+    getStorage()
+    return () => { mountedRef.current = false }
+  },[])
   return (
+
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome" screenOptions={{headerShown:false}}>
-        <Stack.Screen name='Welcome' component={Welcome} />
-        <Stack.Screen name='Singup' component={Singup} />
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Verification' component={Verification} />
-        <Stack.Screen name='Location' component={Location} />
-        <Stack.Screen name='NewLocation' component={NewLocation} />
-        <Stack.Screen name='Home' component={Home} />
-
-        <Stack.Screen name='RestPass' component={RestPass} />
-        <Stack.Screen name='EmailRestPass' component={EmailRestPass} />
+        <Stack.Navigator initialRouteName={storage ? "Home" : "Welcome"} screenOptions={{headerShown:false}}>
+        <Stack.Screen name='Welcome' component={storage ? Home :Welcome} />
+        <Stack.Screen name='Singup' component={storage ? Home :Singup} />
+        <Stack.Screen name='Login' component={storage ? Home :Login} />
+        <Stack.Screen name='Verification' component={storage ? Home :Verification} />
+        <Stack.Screen name='Location' component={storage ? Home :Location} />
+        <Stack.Screen name='NewLocation' component={storage ? Home :NewLocation} />
+        <Stack.Screen name='RestPass' component={storage ? Home :RestPass} />
+        <Stack.Screen name='EmailRestPass' component={storage ? Home :EmailRestPass} />
+        <Stack.Screen name='Home' component={!storage ? Welcome :Home} />
 
 
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
+    
   )
 };
 

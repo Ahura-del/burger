@@ -6,16 +6,29 @@ import {
     responsiveScreenFontSize,
 
   } from 'react-native-responsive-dimensions';
+  import {useNetInfo} from '@react-native-community/netinfo'
 const SingUp = ({navigation}) => {
+
+  const netInfo = useNetInfo()
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   
-  
+ 
 
 
  const singUpBtn = () => {
-
+      if(!netInfo.isConnected || netInfo.isConnected === null){
+        Toast.show({
+          title: 'Please connect to the internet',
+          bg:"yellow.500",
+          placement:'top',
+          duration: 2000,
+          variant:'solid'
+          
+        });
+        return;
+      }
 
     
     if (email == '' || name == '' || password == '') {
