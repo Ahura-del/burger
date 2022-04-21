@@ -1,94 +1,103 @@
 import {Button, Toast} from 'native-base';
 import React, {useState} from 'react';
-import {View, Text, Image, TextInput} from 'react-native';
+import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 import {
     responsiveScreenFontSize,
 
   } from 'react-native-responsive-dimensions';
-// import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-// import { LoginManager, AccessToken } from 'react-native-fbsdk';
-// import {GoogleSignin} from '@react-native-google-signin/google-signin';
+// import {launchImageLibrary} from 'react-native-image-picker';
 // import auth from '@react-native-firebase/auth';
+
+
 // import AsyncStorage from '@react-native-community/async-storage';
-// import axios from 'axios';
 
-// GoogleSignin.configure({
-//   webClientId:
-//     '1094087401782-257rntom9tn79abfagg636ognss5fues.apps.googleusercontent.com',
-// });
 
-const Login = ({navigation}) => {
+const Password = ({navigation, route}) => {
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  const continueBtn = () => {
-    if (email == '') {
+//   const priveEmail = route.params.email;
+
+
+// console.log(route.params.photo);
+// //   const [photo, setPhoto] = useState([]);
+// //   const imageChoose = () => {
+// //     const options = {
+// //       noData: true,
+// //     };
+// //     launchImageLibrary(options, response => {
+// //       if (response.uri) {
+// //         setPhoto(response);
+// //       }
+// //     });
+// //   };
+
+  
+
+
+
+  const singInBtn = async () => {
+
+
+    if (password === '' || email === "") {
       Toast.show({
-        title: 'Please Enter The Email!',
-        placement:'top',
+        title: 'Please fill all fields!',
+        duration: 3000,
         bg:"red.600",
-        duration: 2000,
+        placement:'bottom',
         variant:'solid'
       });
       return;
     } else {
-        console.log(email , 'back')
-        navigation.navigate('Password')
-        //   axios.get(`http://papaberger.ir/api/user/${email}`)
-    //   .then(res=>{
-    //     if(res.status === 200){
-    //       navigation.navigate('pass',{email , photo: res.data.profilePicture });
-    //     }
-    //   })
-      // 
+        console.log('back',mail, pass)
+    //   const res = await auth()
+    //     .signInWithEmailAndPassword(mail, pass)
+    //     .then(response => {
+    //       if (response.user.email) {
+    //         const data = JSON.stringify(response.user.email);
+    //         AsyncStorage.setItem('user', data);
+    //         navigation.navigate('home');
+    //       }
+    //     })
+    //     .catch(error => {
+    //       if (error.code === 'auth/wrong-password') {
+    //         Toast.show({
+    //           text: 'The Password is Worng!',
+    //           buttonText: 'Ok',
+    //           type: 'danger',
+    //           duration: 3000,
+    //         });
+    //       }
+    //     });
     }
   };
 
-//   const onGoogleButtonPress = async () => {
-//     // Get the users ID token
-//     const {idToken} = await GoogleSignin.signIn();
-
-//     // Create a Google credential with the token
-//     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-//     // Sign-in the user with the credential
-//     return auth().signInWithCredential(googleCredential);
-//   };
-
-//   const onFacebookButtonPress = async () => {
-//     try {
-//       // Attempt login with permissions
-//     const result = await LoginManager.logInWithPermissions([
-//       'public_profile',
-//       'email',
-//     ]);
-
-//     if (result.isCancelled) {
-//       throw 'User cancelled the login process';
-//     }
-
-//     // Once signed in, get the users AccesToken
-//     const data = await AccessToken.getCurrentAccessToken();
-  
-//     if (!data) {
-//       throw 'Something went wrong obtaining access token';
-//     }
-
-//     // Create a Firebase credential with the AccessToken
-//     const facebookCredential = auth.FacebookAuthProvider.credential(
-//       data.accessToken,
-//     );
-
-//     // Sign-in the user with the credential
-//   return auth().signInWithCredential(facebookCredential);
-   
-//     } catch (error) {
-//       console.log(error);
-//     }
-    
-//   };
+  const restPass = async email => {
+      console.log(email)
+    // const res = await auth()
+    //   .sendPasswordResetEmail(email)
+    //   .then(res => {
+    //     Toast.show({
+    //       text: 'Please check your Email',
+    //       type: 'success',
+    //       buttonText: 'Ok',
+    //       duration: 3000,
+    //     });
+    //   })
+    //   .catch(err => {
+    //     if (err.code === 'auth/user-not-found') {
+    //       Toast.show({
+    //         text: 'User not found!',
+    //         type: 'danger',
+    //         buttonText: 'close',
+    //         duration: 3000,
+    //       });
+    //       return;
+    //     }
+    //   });
+  };
 
   return (
-    // <Root>
       <View
         style={{
           flex: 1,
@@ -123,11 +132,37 @@ const Login = ({navigation}) => {
             marginLeft: 'auto',
             marginRight: 'auto',
           }}>
-          <View style={{marginTop: 20}}>
-            <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.8)}}>
-              Email Address
-            </Text>
-            <TextInput
+          {/* <View
+            style={{marginTop: 20, flexDirection: 'row', alignItems: 'center'}}> */}
+            {/* {route.params.photo == "" ? ( */}
+                {/* <View
+                 
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: '#fff',
+                    borderRadius: 100,
+                  }}></View> */}
+              {/* ) : ( */}
+                {/* <Image
+                  source={{uri: route.params.photo}}
+                  style={{height: 100, width: 100, borderRadius: 100}}
+                />
+              )} */}
+            {/* <View style={{marginLeft: 20, width: '60%'}}>
+              <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.7)}}>
+                Email Address
+              </Text>
+              <Text style={{color: '#fff', fontFamily: 'Poppins'}}>
+               
+              </Text>
+            </View>
+          </View> */}
+
+          <View style={{marginBottom: -70}}>
+          <View style={{marginBottom: 20, marginTop: 20}}>
+              <Text style={{color: '#FEB500',fontSize:responsiveScreenFontSize(1.7)}}>Eamil Address</Text>
+              <TextInput
               placeholder="hello@example.com"
               style={{color: '#e1e1e1', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.7)}}
               placeholderTextColor="#ccc"
@@ -135,77 +170,60 @@ const Login = ({navigation}) => {
               onChangeText={e => setEmail(e)}
               keyboardType="email-address"
             />
-          </View>
-
-          <View style={{alignItems: 'center'}}>
-
-            <Button size='md' style={{backgroundColor:"#FEB500"}} onPress={continueBtn}>
-              <Text style={{fontFamily: 'Poppins',color:"#000",fontSize:responsiveScreenFontSize(2)}}>Countinue</Text>
+            </View>
+            <View style={{marginBottom: 80}}>
+              <Text style={{color: '#FEB500',fontSize:responsiveScreenFontSize(1.7)}}>Enter Password</Text>
+              <TextInput
+                placeholder="✶✶✶✶✶✶"
+                placeholderTextColor="#ccc"
+                secureTextEntry={true}
+                style={{color: '#fff', width: '50%'}}
+                onChangeText={e => setPassword(e)}
+              />
+            </View>
+            <View style={{alignItems: 'center'}}>
+            <Button size='md' style={{backgroundColor:"#FEB500" , width: 120,
+                height: 45,}}
+             onPress={singInBtn}
+             >
+              <Text style={{fontFamily: 'Poppins',color:"#000",fontSize:responsiveScreenFontSize(2)}}>Sing in</Text>
             </Button>
-      
-            {/* <Text
-              style={{
-                color: '#fff',
-                paddingVertical: 15,
-                fontFamily: 'Poppins',
-              }}>
-              or
-            </Text> */}
-
-              {/* {Platform.OS === "android" ? (<View style={{flexDirection: 'row'}}>
-              <TouchableOpacity
-                onPress={() => onFacebookButtonPress().then(async(res)=>{
-                const data = res.user
-                  navigation.navigate("phoneNum" , {name:data.displayName , email:data.email , pic:data.photoURL})
-                }).catch(err=>{
-                  if(err.code === "auth/-"){
-                    Toast.show({text:"Please check your connection!" , type:"danger" , duration:3000})
-                  }
-                })}
+              
+              <View
                 style={{
-                  backgroundColor: '#007FFF',
-                  height: 50,
-                  width: 50,
-                  borderRadius: 8,
-                  justifyContent: 'center',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  marginRight: 20,
+                  marginTop: 30,
                 }}>
-                <Icon
-                  type="FontAwesome"
-                  name="facebook-f"
-                  style={{color: '#fff', fontSize: 20}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => onGoogleButtonPress().then(async(res)=>{
+                    <TouchableOpacity
                 
-                  const data = res.additionalUserInfo.profile
-                  
-                    navigation.navigate("phoneNum" , {name : data.name , email:data.email , pic : data.picture})
-                }).catch(err=>{
-                  if(err.code === "auth/-"){
-                    Toast.show({text:"Please check your connection!" , type:"danger" , duration:3000})
-                  }
-                })}
-                style={{
-                  backgroundColor: '#FF0000',
-                  height: 50,
-                  width: 50,
-                  borderRadius: 8,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Icon
-                  type="FontAwesome"
-                  name="google-plus"
-                  style={{color: '#fff', fontSize: 20}}
-                />
-              </TouchableOpacity>
-            </View>) : null} */}
-            
+                onPress={() => {
+                  navigation.navigate('RestPass');
+                }}
+                        //   onPress={() => restPass(priveEmail)}
+                    >
 
+                <Text
+                  style={{color: '#fff', paddingVertical: 20,fontSize:responsiveScreenFontSize(1.7)}}
+                  >
+                  Rest your Password
+                </Text>
+                      </TouchableOpacity>
 
+                {/* <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('singin');
+                      }}
+                >
+
+                <Text
+                  style={{color: '#fff', marginBottom: -20,fontSize:responsiveScreenFontSize(1.7)}}
+                    >
+                  Sing in a different account
+                </Text>
+                      </TouchableOpacity> */}
+              </View>
+            </View>
           </View>
         </View>
 
@@ -224,8 +242,7 @@ const Login = ({navigation}) => {
           />
         </View>
       </View>
-    // </Root>
   );
 };
 
-export default Login;
+export default Password;

@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {NativeBaseProvider} from 'native-base'
 import Singup from './Components/Register/Singup/Singup'
 import Login from './Components/Register/Login/Login'
-import Password from './Components/Register/Password/Password'
+import RestPass from './Components/Register/ForgetPassword/ForgetPassword'
 import Verification from './Components/Register/Verification/Verification'
 import Location from './Components/Location/Location'
 import NewLocation from './Components/Location/NewLocation/NewLocation'
@@ -28,7 +28,7 @@ const App = () => {
         <Stack.Screen name='NewLocation' component={NewLocation} />
         <Stack.Screen name='Home' component={Home} />
 
-        <Stack.Screen name='Password' component={Password} />
+        <Stack.Screen name='RestPass' component={RestPass} />
 
 
         </Stack.Navigator>
