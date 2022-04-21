@@ -40,18 +40,18 @@ const Password = ({navigation, route}) => {
 
 
 
-  const singInBtn = async () => {
-    if(!netInfo.isConnected || netInfo.isConnected === null){
-      Toast.show({
-        title: 'Please connect to the internet',
-        bg:"yellow.500",
-        placement:'top',
-        duration: 2000,
-        variant:'solid'
+  const singInBtn =  () => {
+    // if(!netInfo.isConnected || netInfo.isConnected === null){
+    //   Toast.show({
+    //     title: 'Please connect to the internet',
+    //     bg:"yellow.500",
+    //     placement:'top',
+    //     duration: 2000,
+    //     variant:'solid'
         
-      });
-      return;
-    }
+    //   });
+    //   return;
+    // }
 
     if (password === '' || email === "") {
       Toast.show({
@@ -69,7 +69,7 @@ const Password = ({navigation, route}) => {
           if(res.status === 200){
             await AsyncStorage.setItem('token' , res.data.token)
             await AsyncStorage.setItem('userId' , userId)
-            navigation.navigate('Home')
+            navigation.navigate('Preloader')
             setEmail('')
             setName('')
             setPassword('')

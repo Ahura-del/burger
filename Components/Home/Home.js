@@ -22,7 +22,6 @@ library.add(faUser,faShoppingCart,faThLarge,faHome,faHeart,faBell)
 const Home =  ({navigation}) => {
 //   const dispatch = useDispatch();
  const netInfo = useNetInfo()
- console.log(netInfo)
 //   const notifySate = useSelector(state => state.notify.notify);
 //   const checkNotify = 'title' in notifySate;
  
