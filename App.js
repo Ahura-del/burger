@@ -5,6 +5,8 @@ import {NativeBaseProvider} from 'native-base'
 import Singup from './Components/Register/Singup/Singup'
 import Login from './Components/Register/Login/Login'
 import RestPass from './Components/Register/ForgetPassword/ForgetPassword'
+import EmailRestPass from './Components/Register/ForgetPassword/EmailRestPass/EmailRestPass'
+
 import Verification from './Components/Register/Verification/Verification'
 import Location from './Components/Location/Location'
 import NewLocation from './Components/Location/NewLocation/NewLocation'
@@ -29,6 +31,7 @@ const App = () => {
         <Stack.Screen name='Home' component={Home} />
 
         <Stack.Screen name='RestPass' component={RestPass} />
+        <Stack.Screen name='EmailRestPass' component={EmailRestPass} />
 
 
         </Stack.Navigator>

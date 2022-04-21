@@ -18,7 +18,6 @@ const Verification = ({navigation, route}) => {
 //   const dispatch = useDispatch();
   const verifyCode = route.params.code;
   const userId = route.params.userId;
-console.log(route.params)
 
   const stCode = String(verifyCode);
   const inputRef = useRef('codeInputRef2');
@@ -53,12 +52,9 @@ console.log(route.params)
       axios.put(`http://192.168.1.102:3000/auth/verify/${userId}` , {verify:true})
       .then(async(res)=>{
         if(res.status === 200){
-          console.log(res.data)
           await AsyncStorage.setItem('token' , res.data.token)
           await AsyncStorage.setItem('userId' , userId)
-
           navigation.navigate('Location');
-
         }
       })
       .catch(err=>{

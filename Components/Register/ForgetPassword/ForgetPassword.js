@@ -1,48 +1,108 @@
 import React, {useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
-import {Button} from 'native-base';
-import {
-  responsiveScreenFontSize,
-  responsiveScreenHeight,
-  responsiveScreenWidth,
-} from 'react-native-responsive-dimensions';
+import {View, Text, Image, TextInput} from 'react-native';
+import {Button, Toast} from 'native-base';
+import {responsiveScreenFontSize} from 'react-native-responsive-dimensions';
 import CodeInput from 'react-native-confirmation-code-input';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const styles = StyleSheet.create({
-  codeFieldRoot: {marginTop: 20},
-  cell: {
-    width: responsiveScreenWidth(20),
-    height: responsiveScreenHeight(10),
-    marginHorizontal: 5,
-    lineHeight: 38,
-    fontSize: 24,
-    borderWidth: 1.5,
-    borderColor: '#FEB500',
-    textAlign: 'center',
-    color: '#fff',
-    textAlignVertical: 'center',
-  },
-  focusCell: {
-    borderColor: '#fe4e00',
-  },
-});
-
-
-
-const ForgetPassword = () => {
-  const stCode = String(1234);
+const ForgetPassword = ({navigation, route}) => {
+  const [resendCode, setResendCode] = useState('');
+  const email = route.params.email;
+  const userId = route.params.userId;
+  let code = resendCode === '' ? route.params.code : resendCode;
+  const [pass, setPass] = useState('');
+  const [rePass, setRePass] = useState('');
+  const stCode = String(code);
   const inputRef = useRef('codeInputRef2');
-const onFinishCheckingCode2 = (e)=>{
-  console.log(e)
-}
-//   console.log(value.length);
+  const onFinishCheckingCode2 = e => {
+    if (pass === '' || rePass === '') {
+      Toast.show({
+        title: 'Please set password and re-password',
+        bg: 'red.600',
+        placement: 'bottom',
+        duration: 3000,
+        variant: 'solid',
+      });
+      return;
+    }
+    if (pass.length < 6) {
+      Toast.show({
+        title: "You'r password must over 6 characters",
+        bg: 'red.600',
+        placement: 'bottom',
+        duration: 3000,
+        variant: 'solid',
+      });
+      return;
+    }
+    if (pass !== rePass) {
+      Toast.show({
+        title: "Password and re-password don't match",
+        bg: 'red.600',
+        placement: 'bottom',
+        duration: 3000,
+        variant: 'solid',
+      });
+      return;
+    }
+    if (!e) {
+      Toast.show({
+        title: "Please check you'r email and enter the code",
+        bg: 'red.600',
+        placement: 'bottom',
+        duration: 3000,
+        variant: 'solid',
+      });
+      return;
+    }
+
+    axios
+      .put(`http://192.168.1.102:3000/auth/fPass/${userId}`, {password: pass})
+      .then(async res => {
+        if (res.status === 200) {
+          setResendCode('');
+          await AsyncStorage.setItem('token', res.data.token);
+          await AsyncStorage.setItem('userId', res.data.id);
+          navigation.navigate('Home');
+        }
+      })
+      .catch(err => {
+        Toast.show({
+          title: err.response.data,
+          duration: 3000,
+          bg: 'red.600',
+          placement: 'bottom',
+          variant: 'solid',
+        });
+      });
+  };
+
+  const resndCode = () => {
+    axios
+      .get(`http://192.168.1.102:3000/auth/fPass/${email}`)
+      .then(res => {
+        if (res.status === 200) {
+          setResendCode(res.data.code);
+          Toast.show({
+            title: 'Validation code sent to your email',
+            duration: 3000,
+            bg: 'green.600',
+            placement: 'bottom',
+            variant: 'solid',
+          });
+        }
+      })
+      .catch(err => {
+        Toast.show({
+          title: err.response.data,
+          duration: 3000,
+          bg: 'red.600',
+          placement: 'bottom',
+          variant: 'solid',
+        });
+      });
+  };
 
   return (
     <View
@@ -65,13 +125,13 @@ const onFinishCheckingCode2 = (e)=>{
               fontFamily: 'Poppins',
               fontSize: responsiveScreenFontSize(2.5),
             }}>
-            Forget
+            Change
           </Text>
           <Text
             style={{
               color: '#fff',
               fontFamily: 'Poppins',
-              fontSize: responsiveScreenFontSize(2.5),
+              fontSize: responsiveScreenFontSize(2),
             }}>
             Password
           </Text>
@@ -87,63 +147,54 @@ const onFinishCheckingCode2 = (e)=>{
           marginLeft: 'auto',
           marginRight: 'auto',
         }}>
-        <View style={{marginVertical: 40}}>
+        <View style={{marginBottom: 20, marginTop: 20}}>
           <Text
-            style={{
-              color: '#FEB500',
-              fontFamily: 'Poppins',
-              fontSize: responsiveScreenFontSize(2),
-            }}>
-            Enter code we just sent to
+            style={{color: '#FEB500', fontSize: responsiveScreenFontSize(1.7)}}>
+            New Password
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginTop: 15,
-              fontFamily: 'Poppins',
-              fontSize: responsiveScreenFontSize(1.8),
-            }}>
-            hello@exmple.com
-          </Text>
+          <TextInput
+            placeholder="*********"
+            style={{color: '#fff', fontSize: responsiveScreenFontSize(2)}}
+            placeholderTextColor="#ccc"
+            autoFocus={true}
+            onChangeText={e => setPass(e)}
+            secureTextEntry={true}
+          />
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
-        <CodeInput
-              ref={inputRef}
-              keyboardType="numeric"
-              codeLength={4}
-              size={70}
-              className="border-box"
-              activeColor="#FEB500"
-              inactiveColor="#FEB500"
-              compareWithCode={stCode}
-              cellBorderWidth={2}
-              autoFocus={false}
-              codeInputStyle={{
-                fontWeight: '800',
-                fontSize: 20,
-                color: '#fdfdfdfd',
-              }}
-              onFulfill={isValid => onFinishCheckingCode2(isValid)}
-            />
-          {/* <CodeField
-            ref={ref}
-            {...props}
-            value={value}
-            onChangeText={setValue}
-            cellCount={CELL_COUNT}
-            rootStyle={styles.codeFieldRoot}
-            keyboardType="number-pad"
-            textContentType="oneTimeCode"
-            renderCell={({index, symbol, isFocused}) => (
-              <Text
-                key={index}
-                style={[styles.cell, isFocused && styles.focusCell]}
-                onLayout={getCellOnLayoutHandler(index)}>
-                {symbol || (isFocused ? <Cursor /> : null)}
-              </Text>
-            )}
-          /> */}
+        <View style={{marginBottom: 20}}>
+          <Text
+            style={{color: '#FEB500', fontSize: responsiveScreenFontSize(1.7)}}>
+            Re-Password
+          </Text>
+          <TextInput
+            placeholder="*********"
+            style={{color: '#fff', fontSize: responsiveScreenFontSize(2)}}
+            placeholderTextColor="#ccc"
+            onChangeText={e => setRePass(e)}
+            secureTextEntry={true}
+          />
+        </View>
+
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <CodeInput
+            ref={inputRef}
+            keyboardType="numeric"
+            codeLength={4}
+            size={70}
+            className="border-box"
+            activeColor="#FEB500"
+            inactiveColor="#FEB500"
+            compareWithCode={stCode}
+            cellBorderWidth={2}
+            autoFocus={false}
+            codeInputStyle={{
+              fontWeight: '800',
+              fontSize: 20,
+              color: '#fdfdfdfd',
+            }}
+            onFulfill={isValid => onFinishCheckingCode2(isValid)}
+          />
         </View>
         <View
           style={{
@@ -154,6 +205,7 @@ const onFinishCheckingCode2 = (e)=>{
           }}>
           <View
             style={{
+              marginTop: 20,
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
@@ -162,22 +214,23 @@ const onFinishCheckingCode2 = (e)=>{
             <Button
               size="lg"
               style={{
-                width: 120,
-                height: 45,
+                // width: 125,
+                // height: 45,
                 backgroundColor: '#FEB500',
               }}
-              onPress={() => alert('btn')}>
+              onPress={resndCode}>
               <Text
                 style={{
                   fontFamily: 'Poppins',
                   color: '#000',
-                  fontSize: responsiveScreenFontSize(2),
+                  textAlign: 'center',
+                  fontSize: responsiveScreenFontSize(1.7),
                 }}>
-                Verify
+                Resend code
               </Text>
             </Button>
           </View>
-          <View style={{marginTop: 40}}>
+          {/* <View style={{marginTop: 40}}>
             <TouchableOpacity onPress={() => alert('text')}>
               <Text
                 style={{
@@ -187,7 +240,7 @@ const onFinishCheckingCode2 = (e)=>{
                 Resend code
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
 

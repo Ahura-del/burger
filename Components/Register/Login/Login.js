@@ -198,7 +198,7 @@ const Password = ({navigation, route}) => {
                     <TouchableOpacity
                 
                 onPress={() => {
-                  navigation.navigate('RestPass');
+                  navigation.navigate('EmailRestPass');
                 }}
                         //   onPress={() => restPass(priveEmail)}
                     >

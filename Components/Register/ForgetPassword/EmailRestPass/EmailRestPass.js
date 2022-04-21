@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {Button, Toast} from 'native-base';
 import React, {useState} from 'react';
 import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
@@ -12,8 +13,7 @@ import {
 // import AsyncStorage from '@react-native-community/async-storage';
 
 
-const Password = ({navigation, route}) => {
-  const [password, setPassword] = useState('');
+const Password = ({navigation}) => {
   const [email, setEmail] = useState('');
 
 //   const priveEmail = route.params.email;
@@ -36,12 +36,12 @@ const Password = ({navigation, route}) => {
 
 
 
-  const singInBtn = async () => {
+  const sendCode =  () => {
 
 
-    if (password === '' || email === "") {
+    if (email === "") {
       Toast.show({
-        title: 'Please fill all fields!',
+        title: "Please enter you'r email!",
         duration: 3000,
         bg:"red.600",
         placement:'bottom',
@@ -49,7 +49,21 @@ const Password = ({navigation, route}) => {
       });
       return;
     } else {
-        console.log('back',password , email)
+        axios.get(`http://192.168.1.102:3000/auth/fPass/${email}`)
+        .then(res=>{
+            if(res.status === 200){
+                navigation.navigate('RestPass' , {code:res.data.code , userId:res.data.id , email})
+            }
+        })
+        .catch(err=>{
+            Toast.show({
+                title: err.response.data,
+                duration: 3000,
+                bg:"red.600",
+                placement:'bottom',
+                variant:'solid'
+              });
+        })
     //   const res = await auth()
     //     .signInWithEmailAndPassword(mail, pass)
     //     .then(response => {
@@ -72,30 +86,7 @@ const Password = ({navigation, route}) => {
     }
   };
 
-  const restPass = async email => {
-      console.log(email)
-    // const res = await auth()
-    //   .sendPasswordResetEmail(email)
-    //   .then(res => {
-    //     Toast.show({
-    //       text: 'Please check your Email',
-    //       type: 'success',
-    //       buttonText: 'Ok',
-    //       duration: 3000,
-    //     });
-    //   })
-    //   .catch(err => {
-    //     if (err.code === 'auth/user-not-found') {
-    //       Toast.show({
-    //         text: 'User not found!',
-    //         type: 'danger',
-    //         buttonText: 'close',
-    //         duration: 3000,
-    //       });
-    //       return;
-    //     }
-    //   });
-  };
+ 
 
   return (
       <View
@@ -108,18 +99,18 @@ const Password = ({navigation, route}) => {
         }}>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
           <Image
-            source={require('../../../assets/Image/upshape.png')}
+            source={require('../../../../assets/Image/upshape.png')}
             style={{width: '33%', height: '100%'}}
           />
           <View>
             <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2.7)}}>
-              Sing in
+              Reset
             </Text>
-            <Text style={{color: '#fff', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2)}}>Account</Text>
-            <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.7)}}>
-              Don't have account?{' '}
-              <Text onPress={() => navigation.navigate("Singup")}>Sing up</Text>
-            </Text>
+            <Text style={{color: '#fff', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(2)}}>Account Password</Text>
+            {/* <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.7)}}>
+              Your Password */}
+              {/* <Text onPress={() => navigation.navigate("Singup")}>Sing up</Text> */}
+            {/* </Text> */}
           </View>
         </View>
 
@@ -171,7 +162,7 @@ const Password = ({navigation, route}) => {
               keyboardType="email-address"
             />
             </View>
-            <View style={{marginBottom: 80}}>
+            {/* <View style={{marginBottom: 80}}>
               <Text style={{color: '#FEB500',fontSize:responsiveScreenFontSize(1.7)}}>Enter Password</Text>
               <TextInput
                 placeholder="✶✶✶✶✶✶"
@@ -180,46 +171,16 @@ const Password = ({navigation, route}) => {
                 style={{color: '#fff', width: '50%'}}
                 onChangeText={e => setPassword(e)}
               />
-            </View>
-            <View style={{alignItems: 'center'}}>
+            </View> */}
+            <View style={{alignItems: 'center' , marginTop:100}}>
             <Button size='md' style={{backgroundColor:"#FEB500" , width: 120,
                 height: 45,}}
-             onPress={singInBtn}
+             onPress={sendCode}
              >
-              <Text style={{fontFamily: 'Poppins',color:"#000",fontSize:responsiveScreenFontSize(2)}}>Sing in</Text>
+              <Text style={{fontFamily: 'Poppins',color:"#000",fontSize:responsiveScreenFontSize(2)}}>Send Code</Text>
             </Button>
               
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  marginTop: 30,
-                }}>
-                    <TouchableOpacity
-                
-                        //   onPress={() => restPass(priveEmail)}
-                    >
-
-                <Text
-                  style={{color: '#fff', paddingVertical: 20,fontSize:responsiveScreenFontSize(1.7)}}
-                  >
-                  Rest your Password
-                </Text>
-                      </TouchableOpacity>
-
-                {/* <TouchableOpacity
-                    onPress={() => {
-                        navigation.navigate('singin');
-                      }}
-                >
-
-                <Text
-                  style={{color: '#fff', marginBottom: -20,fontSize:responsiveScreenFontSize(1.7)}}
-                    >
-                  Sing in a different account
-                </Text>
-                      </TouchableOpacity> */}
-              </View>
+              
             </View>
           </View>
         </View>
@@ -234,7 +195,7 @@ const Password = ({navigation, route}) => {
           <View></View>
 
           <Image
-            source={require('../../../assets/Image/downshape.png')}
+            source={require('../../../../assets/Image/downshape.png')}
             style={{width: '33%', height: '100%'}}
           />
         </View>
