@@ -64,7 +64,7 @@ const ForgetPassword = ({navigation, route}) => {
           setResendCode('');
           await AsyncStorage.setItem('token', res.data.token);
           await AsyncStorage.setItem('userId', res.data.id);
-          navigation.navigate('Home');
+          navigation.navigate('Preloader');
         }
       })
       .catch(err => {
