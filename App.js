@@ -35,11 +35,9 @@ const App = () => {
     setLoading(true);
     const getStorage = async () => {
       const asyncStorage = await AsyncStorage.getItem('token');
-      // if (netInfo) {
-        // console.log('asyncStorage' , asyncStorage)
-        // setConnect(false);
+     
         if (asyncStorage === null || asyncStorage.length === 0) {
-          // setConnect(false);
+         
           setLoading(false);
 
           setStorage(false);
@@ -47,10 +45,7 @@ const App = () => {
 
           setStorage(true);
         }
-      // } else {
-      //   setConnect(true);
-      //   setLoading(false);
-      // }
+     
     };
     getStorage();
     return () => {
