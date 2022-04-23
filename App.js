@@ -11,38 +11,45 @@ import Verification from './Components/Register/Verification/Verification';
 import Location from './Components/Location/Location';
 import NewLocation from './Components/Location/NewLocation/NewLocation';
 import Preloader from './Components/Preloader/Preloader';
-
+import Notification from './Components/Notification/Notification'
 import Welcome from './Components/Welcome/Welcome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNetInfo} from '@react-native-community/netinfo';
-import {ActivityIndicator, Text} from 'react-native';
 import Connection from './Components/Connection/Connection';
+import Loading from './config/Loading';
+import {Provider} from 'react-redux'
+import Store from './Redux/Store';
 const Stack = createNativeStackNavigator();
 const App = () => {
   const [loading, setLoading] = useState();
-  const [conect, setConnect] = useState();
+  const [conect, setConnect] = useState(false);
   const netInfo = useNetInfo().isConnected;
   const [storage, setStorage] = useState(false);
   const mountedRef = useRef(true);
+  const mountedRef2 = useRef(true);
+
   useEffect(()=>{
     if(netInfo){
       setConnect(false)
     }else{
       setConnect(true)
     }
+
+    return () => {
+      mountedRef2.current = false;
+    };
   },[netInfo])
+
+
   useEffect(() => {
     setLoading(true);
     const getStorage = async () => {
       const asyncStorage = await AsyncStorage.getItem('token');
-     
         if (asyncStorage === null || asyncStorage.length === 0) {
-         
           setLoading(false);
-
           setStorage(false);
         } else {
-
+          setLoading(false);
           setStorage(true);
         }
      
@@ -51,31 +58,34 @@ const App = () => {
     return () => {
       mountedRef.current = false;
     };
-  }, []);
+  }, [conect]);
  
 
   return (
     <>
       {loading ? (
-        <ActivityIndicator />
+        <Loading />
       ) : (
         <>
           {conect ? (
             <Connection />
           ) : (
+            <Provider store={Store}>
+
             <NativeBaseProvider>
               <NavigationContainer>
+                
                 <Stack.Navigator
                   initialRouteName={storage ? 'Preloader' : 'Welcome'}
                   screenOptions={{headerShown: false}}>
                   <Stack.Screen
                     name="Welcome"
                     component={storage ? Preloader : Welcome}
-                  />
+                    />
                   <Stack.Screen
                     name="Singup"
                     component={storage ? Preloader : Singup}
-                  />
+                    />
                   <Stack.Screen
                     name="Login"
                     component={storage ? Preloader : Login}
@@ -83,7 +93,7 @@ const App = () => {
                   <Stack.Screen
                     name="Verification"
                     component={storage ? Preloader : Verification}
-                  />
+                    />
                   <Stack.Screen
                     name="Location"
                     component={storage ? Preloader : Location}
@@ -102,13 +112,60 @@ const App = () => {
                   />
                   <Stack.Screen name="Preloader" component={Preloader} />
                   <Stack.Screen name="Home" component={Home} />
+                  <Stack.Screen name="Notification" component={Notification} />
+
                 </Stack.Navigator>
               </NavigationContainer>
             </NativeBaseProvider>
+          </Provider>
           )}
         </>
       )}
     </>
+  //   <NativeBaseProvider>
+  //   <NavigationContainer>
+  //     <Stack.Navigator
+  //       initialRouteName={storage ? 'Preloader' : 'Welcome'}
+  //       screenOptions={{headerShown: false}}>
+  //       <Stack.Screen
+  //         name="Welcome"
+  //         component={storage ? Preloader : Welcome}
+  //       />
+  //       <Stack.Screen
+  //         name="Singup"
+  //         component={storage ? Preloader : Singup}
+  //       />
+  //       <Stack.Screen
+  //         name="Login"
+  //         component={storage ? Preloader : Login}
+  //       />
+  //       <Stack.Screen
+  //         name="Verification"
+  //         component={storage ? Preloader : Verification}
+  //       />
+  //       <Stack.Screen
+  //         name="Location"
+  //         component={storage ? Preloader : Location}
+  //       />
+  //       <Stack.Screen
+  //         name="NewLocation"
+  //         component={storage ? Preloader : NewLocation}
+  //       />
+  //       <Stack.Screen
+  //         name="RestPass"
+  //         component={storage ? Preloader : RestPass}
+  //       />
+  //       <Stack.Screen
+  //         name="EmailRestPass"
+  //         component={storage ? Preloader : EmailRestPass}
+  //       />
+  //       <Stack.Screen name="Preloader" component={Preloader} />
+  //       <Stack.Screen name="Home" component={Home} />
+  //       <Stack.Screen name="Notification" component={Notification} />
+
+  //     </Stack.Navigator>
+  //   </NavigationContainer>
+  // </NativeBaseProvider>
   );
 };
 

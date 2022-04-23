@@ -1,19 +1,20 @@
-import React, {  useEffect, useRef, useState } from 'react'
-// import {useNetInfo} from '@react-native-community/netinfo'
-// import Connection from '../Connection/Connection'
+import React, {  useEffect, useRef } from 'react'
+
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { ActivityIndicator, Text,View } from 'react-native'
 import Home from '../Home/Home'
-// import { View } from 'native-base'
+import { DevSettings } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { getProducts, getUser } from '../../Redux'
 
 
 const Preloader = () => {
+    const dispatch = useDispatch()
     const restMount = useRef(false)
-    // const netInfo = useNetInfo()
-    const [loading , setLoading] = useState()
+    // const [loading , setLoading] = useState()
     const logout = ()=>{
         AsyncStorage.clear()
+        DevSettings.reload()
     }
   
     
@@ -24,12 +25,14 @@ const Preloader = () => {
             const token = await AsyncStorage.getItem('token')
             
             if(token && userId){
-            setLoading(true)
+            // setLoading(true)
             axios.get(`http://192.168.1.102:3000/auth/user/${userId}` , {headers:{'Authorization': 'Bearer ' + token}})
             .then(res=>{
                 if(res.status === 200){
-                    setLoading(false)
-                    console.log(res.data)
+                    // setLoading(false)
+                    // console.log(res.data)
+                    dispatch(getUser(res.data))
+
                 }
             })
             .catch(err=>{
@@ -37,7 +40,11 @@ const Preloader = () => {
                 })
 
                 axios.get('http://192.168.1.102:3000/products', {headers:{'Authorization': 'Bearer ' + token}})
-                .then(res => console.log(res.data))
+                .then(res => {
+                    if(res.status === 200){
+                        dispatch(getProducts(res.data))
+                    }
+                })
                 .catch(err=>console.log(err.response.data))
             }else{
                 logout()
@@ -80,12 +87,14 @@ const Preloader = () => {
 //         return ()=> restMount.current(true)
 //     },[])
   
- if(!loading){
-     return <Home/>
-}
-else{
-     return <ActivityIndicator color='#FEB500' />
- }
+//  if(!loading){
+//      return <Home/>
+// }
+// else{
+//      return <Loading />
+//  }
+
+return(<Home />)
 
 }
 
