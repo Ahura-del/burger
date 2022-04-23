@@ -23,7 +23,7 @@ import { useSelector } from 'react-redux';
 library.add(faUser,faShoppingCart,faThLarge,faHome,faHeart,faBell )
 const Home =  () => {
 //   const dispatch = useDispatch();
-const {user} = useSelector(state => state.userState)
+
 const {products} = useSelector(state => state.productState)
 const [product , setProduct] = useState([])
 const navigation = useNavigation()
@@ -73,40 +73,13 @@ useEffect(()=>{
     
             flexDirection: 'row'}}
             >
-          {/* <View >
-          <FontAwesomeIcon icon={faHeart} color='#333' size={22} style={{marginRight:15}} /> */}
-    
-            {/* <Icon
-              type="FontAwesome5"
-              name="heart"
-              style={{fontSize: 25, marginRight: 15}}
-              
-            /> */}
-            {/* {checkNotify ? ( */}
-            {/* </View> */}
+          
             <View >
               <TouchableOpacity
-                // style={{width: 30, height: 30}}
                 onPress={() => navigation.navigate('Notification')}>
                   <FontAwesomeIcon icon={faBell} color='#333' size={22} />
-    
-                {/* <BadgeIconNotify
-                  type="FontAwesome"
-                  name="bell"
-                  style={{fontSize: 25, color: 'red'}}
-                /> */}
               </TouchableOpacity>
-            {/* ) : ( */}
-              {/* <TouchableOpacity
-                style={{width: 30, height: 30}}
-                onPress={() => navigation.navigate('notify')}>
-                <Icon
-                  type="FontAwesome5"
-                  name="bell"
-                  style={{fontSize: 25}}
-                />
-                </TouchableOpacity>
-              )} */}
+          
           </View>
               </View>
         </View>
@@ -172,7 +145,7 @@ useEffect(()=>{
             desc={item.info}
             price={item.price}
             mealDitail={() => {
-              navigation.navigate('fullDetail', {
+              navigation.navigate('MealDetail', {
                 item,
               });
             }}

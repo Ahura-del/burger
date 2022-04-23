@@ -8,6 +8,7 @@ import RestPass from './Components/Register/ForgetPassword/ForgetPassword';
 import EmailRestPass from './Components/Register/ForgetPassword/EmailRestPass/EmailRestPass';
 import Home from './Components/Home/Home';
 import Verification from './Components/Register/Verification/Verification';
+import MealDetail from './Components/Category/MealDetail/MealDetial'
 import Location from './Components/Location/Location';
 import NewLocation from './Components/Location/NewLocation/NewLocation';
 import Preloader from './Components/Preloader/Preloader';
@@ -113,6 +114,8 @@ const App = () => {
                   <Stack.Screen name="Preloader" component={Preloader} />
                   <Stack.Screen name="Home" component={Home} />
                   <Stack.Screen name="Notification" component={Notification} />
+                  <Stack.Screen name="MealDetail" component={MealDetail} />
+
 
                 </Stack.Navigator>
               </NavigationContainer>
