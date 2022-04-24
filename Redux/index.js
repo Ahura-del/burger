@@ -1,2 +1,2 @@
 export {getUser} from './User/Action'
-export {getProducts} from './Products/Action'
+export {getProducts , updateProduct} from './Products/Action'

@@ -23,7 +23,7 @@ const PopularMeal = props => {
         borderRadius: 10,
       }}>
       <Image
-        source={{uri: props.Image}}
+        source={props.Image}
         resizeMode="cover"
         style={{
           width: responsiveWidth(30),

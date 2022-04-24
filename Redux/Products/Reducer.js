@@ -1,7 +1,8 @@
-import {PRODUCTS} from './Type'
+import {PRODUCTS, UPDATESTATE} from './Type'
 
 const initialState = {
-    products:[]
+    products:[],
+    productState:false
 }
 
 const productsReducer = (state = initialState , action)=>{
@@ -10,7 +11,10 @@ const productsReducer = (state = initialState , action)=>{
             return{
                 products:action.payload
             }
-            
+        case UPDATESTATE:
+            return{
+                productState:!state.productState
+            }
     
         default:
             return state

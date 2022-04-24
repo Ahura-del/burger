@@ -9,29 +9,70 @@ import {
   } from 'react-native-responsive-dimensions';
 import PopularMeal from './PopularMeal/PopularMeal';
 import { useNavigation } from '@react-navigation/native'
-// import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 // import {addCart, addNotify, delNotify, fetchUser } from '../../Redux';
 // import {withBadge} from 'react-native-elements';
 // import messaging from '@react-native-firebase/messaging';
 // import AsyncStorage from '@react-native-community/async-storage';
 // import {useNetInfo} from "@react-native-community/netinfo";
 // import Connection from '../Connection/Connection';
-import { useSelector } from 'react-redux';
+
 
 // import Connection from '../Connection/Connection';
 // import axios from 'axios';
-library.add(faUser,faShoppingCart,faThLarge,faHome,faHeart,faBell )
-const Home =  () => {
-//   const dispatch = useDispatch();
 
-const {products} = useSelector(state => state.productState)
+const data =[
+  {
+      "id":1,
+      "name":"Chicken Burger",
+      "image":require('../../assets/Image/burger3.png'),
+      "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+      "price":35
+  },
+  {
+      "id":2,
+      "name":"Veggie Burger",
+      "image":require('../../assets/Image/burger2.png'),
+      "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+      "price":25
+  },
+  {
+      "id":3,
+      "name":"Veg Burger",
+      "image":require('../../assets/Image/OGMOK20.png'),
+      "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+      "price":25
+  },
+  {
+      "id":4,
+      "name":"French Fries",
+      "image":require('../../assets/Image/french.png'),
+      "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+      "price":15
+  },
+]
+
+
+library.add(faUser,faShoppingCart,faThLarge,faHome,faHeart,faBell )
+
+
+
+
+
+
+
+
+const Home =  () => {
+  const dispatch = useDispatch();
+
+// const {products} = useSelector(state => state.productState)
 const [product , setProduct] = useState([])
 const navigation = useNavigation()
 
 useEffect(()=>{
-  const spliceProducts = products.splice(0,2)
+  const spliceProducts = data.splice(0,2)
   setProduct(spliceProducts)
-},[products])
+},[])
 
 
 
@@ -115,8 +156,7 @@ useEffect(()=>{
     
           <TouchableOpacity
             onPress={() => {
-              alert('hi')
-              // navigation.navigate('category');
+              navigation.navigate('SubCategory');
             }}>
             <Text
               style={{color: '#fff', fontFamily: 'Poppins', fontSize: responsiveScreenFontSize(1.7)}}>
@@ -139,7 +179,7 @@ useEffect(()=>{
         }}>
         {product.map(item => (
           <PopularMeal
-            key={item._id}
+            key={item.id}
             Image={item.image}
             name={item.name}
             desc={item.info}
@@ -196,7 +236,7 @@ useEffect(()=>{
     
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('category');
+            navigation.navigate('Category');
           }}>
          <FontAwesomeIcon icon={faThLarge} color='black' size={26} />
          </TouchableOpacity>

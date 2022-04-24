@@ -12,6 +12,8 @@ import MealDetail from './Components/Category/MealDetail/MealDetial'
 import Location from './Components/Location/Location';
 import NewLocation from './Components/Location/NewLocation/NewLocation';
 import Preloader from './Components/Preloader/Preloader';
+import Category from './Components/Category/Category'
+import SubCategory from './Components/Category/SubCategory/SubCategory'
 import Notification from './Components/Notification/Notification'
 import Welcome from './Components/Welcome/Welcome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -115,6 +117,10 @@ const App = () => {
                   <Stack.Screen name="Home" component={Home} />
                   <Stack.Screen name="Notification" component={Notification} />
                   <Stack.Screen name="MealDetail" component={MealDetail} />
+                  <Stack.Screen name="Category" component={Category} />
+                  <Stack.Screen name="SubCategory" component={SubCategory} />
+
+
 
 
                 </Stack.Navigator>
