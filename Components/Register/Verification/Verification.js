@@ -31,7 +31,7 @@ const Verification = () => {
           Toast.show({
             title: err.response.data,
             bg: 'red.600',
-            placement: 'top',
+            placement: 'bottom',
             duration: 2000,
             variant: 'solid',
           });
@@ -40,7 +40,7 @@ const Verification = () => {
       Toast.show({
         title: 'Code is invalid!',
         bg: 'red.600',
-        placement: 'top',
+        placement: 'bottom',
         duration: 2000,
         variant: 'solid',
       });
