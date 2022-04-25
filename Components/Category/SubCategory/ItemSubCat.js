@@ -35,7 +35,9 @@ const ItemSubCategory = props => {
         }}
       />
 
-      <TouchableOpacity style={{marginTop: 60, paddingLeft: 10}} onPress={props.mealDitail} >
+      <TouchableOpacity
+        style={{marginTop: 60, paddingLeft: 10}}
+        onPress={props.mealDitail}>
         <Text
           style={{
             fontSize: responsiveFontSize(2),

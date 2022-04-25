@@ -70,14 +70,6 @@ const CartItem = props => {
         <View style={{paddingRight: 10, paddingTop: 8}}>
          <TouchableOpacity onPress={() => dispatch(delCart(props.id))} style={{ width:20 , height:20}} >
          <FontAwesomeIcon icon={faTimes}  size={18} />
-
-         {/* <Icon
-         type="FontAwesome5"
-         name="times"
-         style={{fontSize: 18}}
-         
-       /> */}
-         
          </TouchableOpacity>
         </View>
       </View>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {Button, Toast} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput} from 'react-native';
 import {
   responsiveScreenFontSize,
@@ -12,7 +12,6 @@ const NewLocation = ({navigation, route}) => {
   const [address, setAddress] = useState('');
   const [appartment, setAppartment] = useState('');
   const [floor, setFloor] = useState('');
-
 
   const locationBtn = () => {
     if (city === '' || address === '' || appartment === '' || floor === '') {
@@ -32,10 +31,9 @@ const NewLocation = ({navigation, route}) => {
         floor: floor,
       };
       axios
-        .put(
-          `http://192.168.1.102:3000/auth/location/${route.params.userId}`,
-          {location:JSON.stringify(data)}
-        )
+        .put(`${window.api}/auth/location/${route.params.userId}`, {
+          location: JSON.stringify(data),
+        })
         .then(res => {
           if (res.status === 200) {
             navigation.navigate('Location', {city, address, appartment, floor});

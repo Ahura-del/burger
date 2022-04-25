@@ -1,10 +1,9 @@
 import {Heading} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Image, ScrollView, TouchableOpacity} from 'react-native';
 import ItemSubCategory from './ItemSubCat';
 import {useDispatch, useSelector} from 'react-redux';
-// import {withBadge} from 'react-native-elements';
-import {addCart, delNotify} from '../../../Redux';
+import {addCart} from '../../../Redux';
 import {useNavigation} from '@react-navigation/native';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
@@ -15,63 +14,49 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import { Badge } from 'react-native-elements';
+import {Badge} from 'react-native-elements';
 
-
-
-const products =[
-    {
-        "id":1,
-        "name":"Chicken Burger",
-        "pic":require('../../../assets/Image/burger3.png'),
-        "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":35,
-        "count":1
-    },
-    {
-        "id":2,
-        "name":"Veggie Burger",
-        "pic":require('../../../assets/Image/burger2.png'),
-        "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":25,
-        "count":1
-
-    },
-    {
-        "id":3,
-        "name":"Veg Burger",
-        "pic":require('../../../assets/Image/OGMOK20.png'),
-        "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":25,
-        "count":1
-
-    },
-    {
-        "id":4,
-        "name":"French Fries",
-        "pic":require('../../../assets/Image/french.png'),
-        "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":15,
-        "count":1
-
-    },
-  ]
-
-
+const products = [
+  {
+    id: 1,
+    name: 'Chicken Burger',
+    pic: require('../../../assets/Image/burger3.png'),
+    info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
+    price: 35,
+    count: 1,
+  },
+  {
+    id: 2,
+    name: 'Veggie Burger',
+    pic: require('../../../assets/Image/burger2.png'),
+    info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
+    price: 25,
+    count: 1,
+  },
+  {
+    id: 3,
+    name: 'Veg Burger',
+    pic: require('../../../assets/Image/OGMOK20.png'),
+    info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
+    price: 25,
+    count: 1,
+  },
+  {
+    id: 4,
+    name: 'French Fries',
+    pic: require('../../../assets/Image/french.png'),
+    info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
+    price: 15,
+    count: 1,
+  },
+];
 
 library.add(faShoppingCart, faBell, faHome, faThLarge, faUser);
 
 const SubCategory = () => {
   const navigation = useNavigation();
-
   const dispatch = useDispatch();
-  const stateCart = useSelector(state => state.cartState.cart)
-
-
-  //   const notifySate = useSelector(state => state.notify.notify);
-  //   const checkNotify = 'title' in notifySate;
-
-  //   const BadgeIconNotify = withBadge()(Icon);
+  const stateCart = useSelector(state => state.cartState.cart);
 
   return (
     <View style={{flex: 1, flexDirection: 'column'}}>
@@ -161,12 +146,11 @@ const SubCategory = () => {
                     price={item.price}
                     key={item.id}
                     mealDitail={() => {
-                        navigation.navigate('MealDetail', {
-                          item,
-                        });
-                      }}
+                      navigation.navigate('MealDetail', {
+                        item,
+                      });
+                    }}
                     shopMeal={() => {
-                      // navigation.navigate('cart');
                       dispatch(addCart(item));
                     }}
                   />
@@ -206,50 +190,23 @@ const SubCategory = () => {
             }}>
             <FontAwesomeIcon icon={faThLarge} color="#FEB500" size={26} />
           </TouchableOpacity>
-
-          {/* {stateCart.length !== 0 ? (
-            <BadgeIcon
-              type="FontAwesome5"
-              name="shopping-cart"
-              style={{
-                padding: 8,
-                fontSize: 20,
-                borderRadius: 10,
-                color: '#000',
-              }}
-              onPress={() => navigation.navigate('cart')}
-            />
-          ) : (
-            <Icon
-              type="FontAwesome5"
-              name="shopping-cart"
-              style={{
-                padding: 8,
-                fontSize: 20,
-                borderRadius: 10,
-                color: '#000',
-              }}
-              onPress={() => {
-                navigation.navigate('cart');
-              }}
-            />
-          )} */}
-{stateCart.length !== 0 ? (
-             <TouchableOpacity onPress={() => navigation.navigate('Cart')}> 
-             
-        <Badge value={stateCart.length} status='error' containerStyle={{ position: 'absolute', top: -10, left: 25 }} />
-        <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
+          {stateCart.length !== 0 ? (
+            <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+              <Badge
+                value={stateCart.length}
+                status="error"
+                containerStyle={{position: 'absolute', top: -10, left: 25}}
+              />
+              <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
             </TouchableOpacity>
-            ) : ( 
+          ) : (
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Cart');
               }}>
               <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
-
-            
             </TouchableOpacity>
-            )} 
+          )}
 
           <TouchableOpacity
             onPress={() => {

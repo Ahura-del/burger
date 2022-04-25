@@ -1,5 +1,5 @@
 import React, {useState, Fragment, useEffect} from 'react';
-import {Heading} from 'native-base'
+import {Heading} from 'native-base';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
@@ -15,17 +15,8 @@ import {responsiveScreenFontSize} from 'react-native-responsive-dimensions';
 import PopularMeal from './PopularMeal/PopularMeal';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import { addCart } from '../../Redux';
-import { Badge } from 'react-native-elements';
-// import {addCart, addNotify, delNotify, fetchUser } from '../../Redux';
-// import {withBadge} from 'react-native-elements';
-// import messaging from '@react-native-firebase/messaging';
-// import AsyncStorage from '@react-native-community/async-storage';
-// import {useNetInfo} from "@react-native-community/netinfo";
-// import Connection from '../Connection/Connection';
-
-// import Connection from '../Connection/Connection';
-// import axios from 'axios';
+import {addCart} from '../../Redux';
+import {Badge} from 'react-native-elements';
 
 const data = [
   {
@@ -34,7 +25,7 @@ const data = [
     pic: require('../../assets/Image/burger3.png'),
     info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
     price: 35,
-    count:1
+    count: 1,
   },
   {
     id: 2,
@@ -42,8 +33,7 @@ const data = [
     pic: require('../../assets/Image/burger2.png'),
     info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
     price: 25,
-    count:1
-
+    count: 1,
   },
   {
     id: 3,
@@ -51,8 +41,7 @@ const data = [
     pic: require('../../assets/Image/OGMOK20.png'),
     info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
     price: 25,
-    count:1
-
+    count: 1,
   },
   {
     id: 4,
@@ -60,8 +49,7 @@ const data = [
     pic: require('../../assets/Image/french.png'),
     info: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.',
     price: 15,
-    count:1
-
+    count: 1,
   },
 ];
 
@@ -69,13 +57,18 @@ library.add(faUser, faShoppingCart, faThLarge, faHome, faHeart, faBell);
 
 const Home = () => {
   const dispatch = useDispatch();
-  const stateCart = useSelector(state => state.cartState.cart)
+  const stateCart = useSelector(state => state.cartState.cart);
   const [product, setProduct] = useState([]);
   const navigation = useNavigation();
-
+  const getHomeProduct = () => {
+    let homeProduct = [];
+    for (let i = 0; i < 2; i++) {
+      homeProduct.push(data[i]);
+    }
+    setProduct(homeProduct);
+  };
   useEffect(() => {
-    const spliceProducts = data.splice(0, 2);
-    setProduct(spliceProducts);
+    getHomeProduct();
   }, []);
 
   return (
@@ -89,7 +82,6 @@ const Home = () => {
           />
           <View
             style={{
-              // height:"100%",
               width: '100%',
               position: 'absolute',
               top: 0,
@@ -104,13 +96,13 @@ const Home = () => {
                 justifyContent: 'space-around',
               }}>
               <View>
-                <Heading size='lg' >Explore</Heading>
+                <Heading size="lg">Explore</Heading>
                 <Text
                   style={{
                     fontFamily: 'Poppins',
                     fontWeight: '600',
                     color: '#000',
-                    marginTop:10,
+                    marginTop: 10,
                     fontSize: responsiveScreenFontSize(2.7),
                   }}>
                   What would you like to eat?
@@ -226,7 +218,6 @@ const Home = () => {
               <FontAwesomeIcon icon={faHome} color="#FEB500" size={26} />
             </TouchableOpacity>
 
-           
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Category');
@@ -234,29 +225,28 @@ const Home = () => {
               <FontAwesomeIcon icon={faThLarge} color="black" size={26} />
             </TouchableOpacity>
 
-          
             {stateCart.length !== 0 ? (
-             <TouchableOpacity onPress={() => navigation.navigate('Cart')}> 
-             
-        <Badge value={stateCart.length} status='error' containerStyle={{ position: 'absolute', top: -10, left: 25 }} />
-        <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
-            </TouchableOpacity>
-            ) : ( 
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Cart');
-              }}>
-              <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
-
-            
-            </TouchableOpacity>
-            )} 
+              <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+                <Badge
+                  value={stateCart.length}
+                  status="error"
+                  containerStyle={{position: 'absolute', top: -10, left: 25}}
+                />
+                <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Cart');
+                }}>
+                <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Profile');
               }}>
               <FontAwesomeIcon icon={faUser} color="#000" size={26} />
-            
             </TouchableOpacity>
           </View>
         </View>

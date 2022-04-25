@@ -31,12 +31,12 @@ library.add(
   faBell,
 );
 import {useNavigation} from '@react-navigation/native';
-import { delAllCart } from '../../../Redux';
+import {delAllCart} from '../../../Redux';
 
 const Checkout = () => {
   const navigation = useNavigation();
   const list = useSelector(state => state.cartState.cart);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   function sumPrice(input) {
     let total = 0;
     for (let i = 0; i < input.length; i++) {
@@ -44,13 +44,6 @@ const Checkout = () => {
     }
     return total;
   }
-
-  //   const request = {
-  //     merchant_id: 'f042801a-f79d-11e6-8df1-005056a205be',
-  //     amount: 1000,
-  //     description: 'hi',
-  //     callback_url: 'http://redreseller.com/verify',
-  //   };
 
   const payBtn = () => {
     Toast.show({
@@ -60,10 +53,10 @@ const Checkout = () => {
       placement: 'bottom',
       variant: 'solid',
     });
-    setTimeout(()=>{
-      navigation.navigate('Home')
-      dispatch(delAllCart())
-    },2000)
+    setTimeout(() => {
+      navigation.navigate('Home');
+      dispatch(delAllCart());
+    }, 2000);
   };
 
   return (
@@ -99,34 +92,6 @@ const Checkout = () => {
                     flexDirection: 'row',
                     justifyContent: 'space-around',
                   }}>
-                  {/* {checkNotify ? (
-                    <TouchableOpacity
-                      style={{width: 30, height: 30}}
-                      onPress={() => {
-                        navigation.navigate('notify', {
-                          title: notifySate.title,
-                          desc: notifySate.body,
-                          img: notifySate.android.imageUrl,
-                        });
-                        dispatch(delNotify());
-                      }}>
-                      <BadgeIconNotify
-                        type="FontAwesome"
-                        name="bell"
-                        style={{fontSize: 20, color: 'red'}}
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      style={{width: 30, height: 30}}
-                      onPress={() => navigation.navigate('notify')}>
-                      <Icon
-                        type="FontAwesome5"
-                        name="bell"
-                        style={{fontSize: 20, color: '#FEB500'}}
-                      />
-                    </TouchableOpacity>
-                  )} */}
                   <View>
                     <TouchableOpacity
                       onPress={() => navigation.navigate('Notification')}>
@@ -147,7 +112,7 @@ const Checkout = () => {
                   <FlatList
                     data={list}
                     keyExtractor={item => item.id}
-                    renderItem={({item}) => (<CheckOutItem data={item} />)}
+                    renderItem={({item}) => <CheckOutItem data={item} />}
                   />
                 </View>
               ) : (
@@ -174,11 +139,6 @@ const Checkout = () => {
                       Add Meal ...
                     </Text>
                     <FontAwesomeIcon icon={faPlus} color="#FEB500" />
-                    {/* <Icon
-                      type="FontAwesome5"
-                      name="plus"
-                      style={{color: '#FEB500'}}
-                    /> */}
                   </View>
                 </TouchableOpacity>
               )}
@@ -265,11 +225,6 @@ const Checkout = () => {
                     marginBottom: 15,
                   }}>
                   <FontAwesomeIcon icon={faHamburger} color="#FEB500" />
-                  {/* <Icon
-                    type="FontAwesome5"
-                    name="hamburger"
-                    style={{color: '#FEB500'}}
-                  /> */}
                   <Text
                     style={{
                       color: '#FEB500',
@@ -330,13 +285,13 @@ const Checkout = () => {
                   </Text>
                 </Button>
               ) : (
-                <Button  style={{backgroundColor: '#ccc'}} isDisabled>
+                <Button style={{backgroundColor: '#ccc'}} isDisabled>
                   <Text
                     style={{
                       fontFamily: 'Poppins',
                       fontSize: 16,
                       fontWeight: '200',
-                      color: '#fdfdfd'
+                      color: '#fdfdfd',
                     }}>
                     Place Order
                   </Text>

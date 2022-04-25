@@ -5,8 +5,11 @@ import {responsiveScreenFontSize} from 'react-native-responsive-dimensions';
 import CodeInput from 'react-native-confirmation-code-input';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-const ForgetPassword = ({navigation, route}) => {
+const ForgetPassword = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
   const [resendCode, setResendCode] = useState('');
   const email = route.params.email;
   const userId = route.params.userId;
@@ -58,7 +61,7 @@ const ForgetPassword = ({navigation, route}) => {
     }
 
     axios
-      .put(`http://192.168.1.102:3000/auth/fPass/${userId}`, {password: pass})
+      .put(`${window.api}/auth/fPass/${userId}`, {password: pass})
       .then(async res => {
         if (res.status === 200) {
           setResendCode('');
@@ -80,7 +83,7 @@ const ForgetPassword = ({navigation, route}) => {
 
   const resndCode = () => {
     axios
-      .get(`http://192.168.1.102:3000/auth/fPass/${email}`)
+      .get(`${window.api}/auth/fPass/${email}`)
       .then(res => {
         if (res.status === 200) {
           setResendCode(res.data.code);
@@ -214,8 +217,6 @@ const ForgetPassword = ({navigation, route}) => {
             <Button
               size="lg"
               style={{
-                // width: 125,
-                // height: 45,
                 backgroundColor: '#FEB500',
               }}
               onPress={resndCode}>
@@ -230,17 +231,6 @@ const ForgetPassword = ({navigation, route}) => {
               </Text>
             </Button>
           </View>
-          {/* <View style={{marginTop: 40}}>
-            <TouchableOpacity onPress={() => alert('text')}>
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: responsiveScreenFontSize(2),
-                }}>
-                Resend code
-              </Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
       </View>
 

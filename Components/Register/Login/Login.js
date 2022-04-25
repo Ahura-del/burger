@@ -2,48 +2,15 @@ import {Button, Toast} from 'native-base';
 import React, {useState} from 'react';
 import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 import {responsiveScreenFontSize} from 'react-native-responsive-dimensions';
-import {useNetInfo} from '@react-native-community/netinfo';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
-// import {launchImageLibrary} from 'react-native-image-picker';
-// import auth from '@react-native-firebase/auth';
-
-// import AsyncStorage from '@react-native-community/async-storage';
-
-const Password = ({navigation, route}) => {
-  const netInfo = useNetInfo();
+const Password = () => {
+  const navigation = useNavigation();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-
-  //   const priveEmail = route.params.email;
-
-  // console.log(route.params.photo);
-  // //   const [photo, setPhoto] = useState([]);
-  // //   const imageChoose = () => {
-  // //     const options = {
-  // //       noData: true,
-  // //     };
-  // //     launchImageLibrary(options, response => {
-  // //       if (response.uri) {
-  // //         setPhoto(response);
-  // //       }
-  // //     });
-  // //   };
-
   const singInBtn = () => {
-    // if(!netInfo.isConnected || netInfo.isConnected === null){
-    //   Toast.show({
-    //     title: 'Please connect to the internet',
-    //     bg:"yellow.500",
-    //     placement:'top',
-    //     duration: 2000,
-    //     variant:'solid'
-
-    //   });
-    //   return;
-    // }
-
     if (password === '' || email === '') {
       Toast.show({
         title: 'Please fill all fields!',
@@ -55,15 +22,15 @@ const Password = ({navigation, route}) => {
       return;
     } else {
       axios
-        .post('http://192.168.1.102:3000/auth/singin', {
+        .post(`${window.api}/auth/singin`, {
           email,
           password,
         })
-        .then(async (res) => {
+        .then(async res => {
           if (res.status === 200) {
-           const token = await AsyncStorage.setItem('token', res.data.token);
+            const token = await AsyncStorage.setItem('token', res.data.token);
             const userId = await AsyncStorage.setItem('userId', res.data.id);
-            
+
             navigation.navigate('Preloader');
             setEmail('');
             setPassword('');
@@ -79,7 +46,7 @@ const Password = ({navigation, route}) => {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.log(err);
           Toast.show({
             title: err.response.data,
             duration: 3000,
@@ -88,25 +55,6 @@ const Password = ({navigation, route}) => {
             variant: 'solid',
           });
         });
-      //   const res = await auth()
-      //     .signInWithEmailAndPassword(mail, pass)
-      //     .then(response => {
-      //       if (response.user.email) {
-      //         const data = JSON.stringify(response.user.email);
-      //         AsyncStorage.setItem('user', data);
-      //         navigation.navigate('home');
-      //       }
-      //     })
-      //     .catch(error => {
-      //       if (error.code === 'auth/wrong-password') {
-      //         Toast.show({
-      //           text: 'The Password is Worng!',
-      //           buttonText: 'Ok',
-      //           type: 'danger',
-      //           duration: 3000,
-      //         });
-      //       }
-      //     });
     }
   };
 
@@ -162,33 +110,6 @@ const Password = ({navigation, route}) => {
           marginLeft: 'auto',
           marginRight: 'auto',
         }}>
-        {/* <View
-            style={{marginTop: 20, flexDirection: 'row', alignItems: 'center'}}> */}
-        {/* {route.params.photo == "" ? ( */}
-        {/* <View
-                 
-                  style={{
-                    width: 100,
-                    height: 100,
-                    backgroundColor: '#fff',
-                    borderRadius: 100,
-                  }}></View> */}
-        {/* ) : ( */}
-        {/* <Image
-                  source={{uri: route.params.photo}}
-                  style={{height: 100, width: 100, borderRadius: 100}}
-                />
-              )} */}
-        {/* <View style={{marginLeft: 20, width: '60%'}}>
-              <Text style={{color: '#FEB500', fontFamily: 'Poppins',fontSize:responsiveScreenFontSize(1.7)}}>
-                Email Address
-              </Text>
-              <Text style={{color: '#fff', fontFamily: 'Poppins'}}>
-               
-              </Text>
-            </View>
-          </View> */}
-
         <View style={{marginBottom: -70}}>
           <View style={{marginBottom: 20, marginTop: 20}}>
             <Text
@@ -251,9 +172,7 @@ const Password = ({navigation, route}) => {
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('EmailRestPass');
-                }}
-                //   onPress={() => restPass(priveEmail)}
-              >
+                }}>
                 <Text
                   style={{
                     color: '#fff',
@@ -263,19 +182,6 @@ const Password = ({navigation, route}) => {
                   Rest your Password
                 </Text>
               </TouchableOpacity>
-
-              {/* <TouchableOpacity
-                    onPress={() => {
-                        navigation.navigate('singin');
-                      }}
-                >
-
-                <Text
-                  style={{color: '#fff', marginBottom: -20,fontSize:responsiveScreenFontSize(1.7)}}
-                    >
-                  Sing in a different account
-                </Text>
-                      </TouchableOpacity> */}
             </View>
           </View>
         </View>

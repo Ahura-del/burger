@@ -2,9 +2,8 @@
 import React, {Fragment} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import GroupCategory from './GroupCategory';
-import {Badge, withBadge} from 'react-native-elements';
+import {Badge} from 'react-native-elements';
 import {useSelector} from 'react-redux';
-
 import {useNavigation} from '@react-navigation/native';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
@@ -43,24 +42,14 @@ const data = [
 ];
 
 const Category = () => {
-  //   const notifySate = useSelector(state => state.notify.notify);
-  //   const checkNotify = 'title' in notifySate;
-  //   const BadgeIconNotify = withBadge()(Icon);
-  // const dispatch = useDispatch()
   const navigation = useNavigation();
-  const stateCart = useSelector(state => state.cartState.cart)
-
-  //   const stateCart = useSelector(state => state.cart.cart);
-
-  //   const BadgeIcon = withBadge(stateCart.length)(Icon);
-
+  const stateCart = useSelector(state => state.cartState.cart);
   return (
     <Fragment>
       <ScrollView style={{backgroundColor: '#000', marginBottom: 0}}>
         <View
           style={{
             width: '90%',
-
             marginRight: 'auto',
             marginLeft: 'auto',
             height: '100%',
@@ -130,18 +119,6 @@ const Category = () => {
             }}>
             <FontAwesomeIcon icon={faHome} color="#000" size={26} />
           </TouchableOpacity>
-          {/* <Icon
-            type="FontAwesome5"
-            name="home"
-            style={{
-              fontSize: 20,
-              padding: 8,
-              borderRadius: 10,
-              color: '#000',
-            }}
-            
-          /> */}
-
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Category');
@@ -157,21 +134,22 @@ const Category = () => {
           </TouchableOpacity>
 
           {stateCart.length !== 0 ? (
-             <TouchableOpacity onPress={() => navigation.navigate('Cart')}> 
-             
-        <Badge value={stateCart.length} status='error' containerStyle={{ position: 'absolute', top: -10, left: 25 }} />
-        <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
+            <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+              <Badge
+                value={stateCart.length}
+                status="error"
+                containerStyle={{position: 'absolute', top: -10, left: 25}}
+              />
+              <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
             </TouchableOpacity>
-            ) : ( 
+          ) : (
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Cart');
               }}>
               <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
-
-            
             </TouchableOpacity>
-            )} 
+          )}
 
           <TouchableOpacity
             onPress={() => {
