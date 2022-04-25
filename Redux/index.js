@@ -1,2 +1,2 @@
-export {getUser,updateUser} from './User/Action'
+export {getUser,updateUser,delUSer} from './User/Action'
 export {delCart , addCart , decreaseCart , delAllCart } from './Cart/Action';

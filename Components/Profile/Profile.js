@@ -29,6 +29,7 @@ import {
   faPencilAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { delUSer } from '../../Redux';
 library.add(
   faUser,
   faShoppingCart,
@@ -64,7 +65,7 @@ const Profile = () => {
   const logOut = async () => {
     await AsyncStorage.removeItem('userId');
     await AsyncStorage.removeItem('token');
-
+    dispatch(delUSer())
     BackHandler.exitApp();
   };
 

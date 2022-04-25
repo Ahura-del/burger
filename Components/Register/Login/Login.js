@@ -6,10 +6,11 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
-const Password = () => {
+const Login = () => {
   const navigation = useNavigation();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+
   const singInBtn = () => {
     if (password === '' || email === '') {
       Toast.show({
@@ -26,7 +27,7 @@ const Password = () => {
           email,
           password,
         })
-        .then(async res => {
+        .then(async(res) => {
           if (res.status === 200) {
             const token = await AsyncStorage.setItem('token', res.data.token);
             const userId = await AsyncStorage.setItem('userId', res.data.id);
@@ -39,14 +40,13 @@ const Password = () => {
             navigation.navigate('Verification', {
               code: res.data.code,
               userId: res.data.id,
-              email,
+              email: email,
             });
             setEmail('');
             setPassword('');
           }
         })
         .catch(err => {
-          console.log(err);
           Toast.show({
             title: err.response.data,
             duration: 3000,
@@ -54,6 +54,7 @@ const Password = () => {
             placement: 'bottom',
             variant: 'solid',
           });
+          return;
         });
     }
   };
@@ -205,4 +206,4 @@ const Password = () => {
   );
 };
 
-export default Password;
+export default Login;

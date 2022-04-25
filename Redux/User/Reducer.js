@@ -1,4 +1,4 @@
-import {UPDATEUSER, USER} from './Type'
+import {DELUSER, UPDATEUSER, USER} from './Type'
 
 const initialState = {
     user:{},
@@ -16,7 +16,10 @@ const userReducer = (state=initialState , action)=>{
                 ...state,
                 update:!state.update
             }
-    
+            case DELUSER:
+                return{
+                    user:{}
+                }
         default:
             return state
     }

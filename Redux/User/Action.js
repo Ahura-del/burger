@@ -1,4 +1,4 @@
-import {UPDATEUSER, USER} from './Type'
+import {DELUSER, UPDATEUSER, USER} from './Type'
 
 export const getUser = (user)=>{
     return{
@@ -10,5 +10,11 @@ export const getUser = (user)=>{
 export const updateUser = ()=>{
     return{
         type:UPDATEUSER,
+    }
+}
+
+export const delUSer = ()=>{
+    return{
+        type:DELUSER
     }
 }
