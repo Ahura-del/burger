@@ -23,6 +23,7 @@ import person1 from '../../../assets/Image/persion1.png';
 import person2 from '../../../assets/Image/persion2.png';
 import person3 from '../../../assets/Image/persion3.png';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import { addCart } from '../../../Redux';
 
 const data = [
   {
@@ -47,6 +48,7 @@ library.add(faShoppingCart, faBell);
 const MealDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const dispatch = useDispatch()
   const [text, setText] = useState('');
 
   const saveBtn = () => {
@@ -161,7 +163,8 @@ const MealDetail = () => {
                 right: -25,
               },
             }}>
-            <View
+            <TouchableOpacity
+            onPress={()=>dispatch(addCart(route.params.item))}
               style={{
                 width: 70,
                 height: 70,
@@ -175,7 +178,7 @@ const MealDetail = () => {
                 color="#FEB500"
                 size={24}
               />
-            </View>
+            </TouchableOpacity>
           </BoxShadow>
         </View>
 

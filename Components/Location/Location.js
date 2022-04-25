@@ -98,7 +98,7 @@ const Location = ({navigation, route}) => {
             size="md"
             style={{backgroundColor: '#FEB500'}}
             onPress={() => {
-              navigation.navigate('Home');
+              navigation.navigate('Preloader');
             }}>
             <Text
               style={{
