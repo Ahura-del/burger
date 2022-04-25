@@ -4,13 +4,17 @@ import {View, Text, Image,TouchableOpacity} from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-// import {useDispatch , useSelector} from 'react-redux'
-// import {delCart} from '../../../../Redux'
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from 'react-native-responsive-dimensions';
+import {useDispatch } from 'react-redux'
+import { delCart } from '../../../../Redux';
 library.add(faTimes)
 
 const CartItem = props => {
-//   const dispatch = useDispatch()
-//    useSelector(state=>state.cart)
+  const dispatch = useDispatch()
 
   return (
     <View
@@ -25,10 +29,10 @@ const CartItem = props => {
         borderRadius: 10,
       }}>
       <Image
-        source={{uri : props.pic}}
+        source={props.pic}
         style={{
-          width: '45%',
-          height: '100%',
+          width: responsiveWidth(32),
+          height: responsiveHeight(15),
           position: 'absolute',
           top: -35,
           left: -55,
@@ -51,28 +55,28 @@ const CartItem = props => {
           }}>
           <View>
             <Text
-              style={{fontFamily: 'Poppins', fontSize: 16, paddingBottom: 10}}>
-              {/* {props.name} */}
+              style={{fontFamily: 'Poppins', fontSize: responsiveFontSize(2),color:"#222" ,paddingBottom: 10}}>
+              {props.name}
             </Text>
-            <Text style={{fontFamily: 'Poppins', fontSize: 10}}>
+            <Text style={{fontFamily: 'Poppins', fontSize: responsiveFontSize(1.5)}}>
               By Navgivan Hotel
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontFamily: 'Poppins', fontSize: 18}}>${props.price}</Text>
-            <Text>X {props.count}</Text>
+            <Text style={{fontFamily: 'Poppins', color:"#111" ,fontSize: responsiveFontSize(2.3)}}>${props.price}</Text>
+            <Text style={{color:"#111"}} >X {props.count}</Text>
           </View>
         </View>
         <View style={{paddingRight: 10, paddingTop: 8}}>
          <TouchableOpacity onPress={() => dispatch(delCart(props.id))} style={{ width:20 , height:20}} >
          <FontAwesomeIcon icon={faTimes}  size={18} />
 
-         <Icon
+         {/* <Icon
          type="FontAwesome5"
          name="times"
          style={{fontSize: 18}}
          
-       />
+       /> */}
          
          </TouchableOpacity>
         </View>

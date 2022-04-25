@@ -4,15 +4,15 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Home from '../Home/Home'
 import { DevSettings } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { getProducts, getUser } from '../../Redux'
+import { useDispatch } from 'react-redux'
+import {  getUser } from '../../Redux'
 
 
 const Preloader = () => {
     const dispatch = useDispatch()
-    const {productState} = useSelector(state=>state.productState)
+    // const {productState} = useSelector(state=>state.productState)
     const restUser = useRef(false)
-    const restProduct = useRef(false)
+    // const restProduct = useRef(false)
     // const [loading , setLoading] = useState()
     const logout = ()=>{
         AsyncStorage.clear()
@@ -60,48 +60,48 @@ const Preloader = () => {
         },[])
 
 
-        useEffect(()=>{
-            const setProducts = async ()=>{
-                const token = await AsyncStorage.getItem('token')
-                if(token){
-                    dispatch(getProducts([
-                        {
-                            "id":1,
-                            "name":"Chicken Burger",
-                            "image":require('../../assets/Image/burger3.png'),
-                            "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-                            "price":35
-                        },
-                        {
-                            "id":2,
-                            "name":"Veggie Burger",
-                            "image":require('../../assets/Image/burger2.png'),
-                            "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-                            "price":25
-                        },
-                        {
-                            "id":3,
-                            "name":"Veg Burger",
-                            "image":require('../../assets/Image/OGMOK20.png'),
-                            "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-                            "price":25
-                        },
-                        {
-                            "id":4,
-                            "name":"French Fries",
-                            "image":require('../../assets/Image/french.png'),
-                            "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-                            "price":15
-                        },
-                    ]))
-                }else{
-                    logout()
-                }
-            }
-            setProducts()
-            return ()=> {restProduct.current = true}
+        // useEffect(()=>{
+        //     const setProducts = async ()=>{
+        //         const token = await AsyncStorage.getItem('token')
+        //         if(token){
+        //             dispatch(getProducts([
+        //                 {
+        //                     "id":1,
+        //                     "name":"Chicken Burger",
+        //                     "image":require('../../assets/Image/burger3.png'),
+        //                     "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+        //                     "price":35
+        //                 },
+        //                 {
+        //                     "id":2,
+        //                     "name":"Veggie Burger",
+        //                     "image":require('../../assets/Image/burger2.png'),
+        //                     "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+        //                     "price":25
+        //                 },
+        //                 {
+        //                     "id":3,
+        //                     "name":"Veg Burger",
+        //                     "image":require('../../assets/Image/OGMOK20.png'),
+        //                     "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+        //                     "price":25
+        //                 },
+        //                 {
+        //                     "id":4,
+        //                     "name":"French Fries",
+        //                     "image":require('../../assets/Image/french.png'),
+        //                     "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
+        //                     "price":15
+        //                 },
+        //             ]))
+        //         }else{
+        //             logout()
+        //         }
+        //     }
+        //     setProducts()
+        //     return ()=> {restProduct.current = true}
 
-        },[productState])
+        // },[productState])
 
 // const getAllDataCallback = useCallback(()=>{
 

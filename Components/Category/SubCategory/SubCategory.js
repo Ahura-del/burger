@@ -15,6 +15,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { Badge } from 'react-native-elements';
 
 
 
@@ -22,30 +23,37 @@ const products =[
     {
         "id":1,
         "name":"Chicken Burger",
-        "image":require('../../../assets/Image/burger3.png'),
+        "pic":require('../../../assets/Image/burger3.png'),
         "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":35
+        "price":35,
+        "count":1
     },
     {
         "id":2,
         "name":"Veggie Burger",
-        "image":require('../../../assets/Image/burger2.png'),
+        "pic":require('../../../assets/Image/burger2.png'),
         "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":25
+        "price":25,
+        "count":1
+
     },
     {
         "id":3,
         "name":"Veg Burger",
-        "image":require('../../../assets/Image/OGMOK20.png'),
+        "pic":require('../../../assets/Image/OGMOK20.png'),
         "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":25
+        "price":25,
+        "count":1
+
     },
     {
         "id":4,
         "name":"French Fries",
-        "image":require('../../../assets/Image/french.png'),
+        "pic":require('../../../assets/Image/french.png'),
         "info":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, natus.",
-        "price":15
+        "price":15,
+        "count":1
+
     },
   ]
 
@@ -57,7 +65,8 @@ const SubCategory = () => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
-  
+  const stateCart = useSelector(state => state.cartState.cart)
+
 
   //   const notifySate = useSelector(state => state.notify.notify);
   //   const checkNotify = 'title' in notifySate;
@@ -146,7 +155,7 @@ const SubCategory = () => {
                 }}>
                 {products.map(item => (
                   <ItemSubCategory
-                    pic={item.image}
+                    pic={item.pic}
                     name={item.name}
                     desc={item.info}
                     price={item.price}
@@ -225,13 +234,22 @@ const SubCategory = () => {
               }}
             />
           )} */}
+{stateCart.length !== 0 ? (
+             <TouchableOpacity onPress={() => navigation.navigate('Cart')}> 
+             
+        <Badge value={stateCart.length} status='error' containerStyle={{ position: 'absolute', top: -10, left: 25 }} />
+        <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
+            </TouchableOpacity>
+            ) : ( 
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Cart');
+              }}>
+              <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
 
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('cart');
-            }}>
-            <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
-          </TouchableOpacity>
+            
+            </TouchableOpacity>
+            )} 
 
           <TouchableOpacity
             onPress={() => {

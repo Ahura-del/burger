@@ -118,7 +118,7 @@ const MealDetail = ({navigation, route}) => {
             borderRadius: 10,
           }}>
           <Image
-            source={route.params.item.image}
+            source={route.params.item.pic}
             resizeMode="cover"
             style={{
               width: responsiveWidth(60),

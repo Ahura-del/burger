@@ -2,7 +2,7 @@
 import React, {Fragment} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import GroupCategory from './GroupCategory';
-import {withBadge} from 'react-native-elements';
+import {Badge, withBadge} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 
 import {useNavigation} from '@react-navigation/native';
@@ -48,6 +48,8 @@ const Category = () => {
   //   const BadgeIconNotify = withBadge()(Icon);
   // const dispatch = useDispatch()
   const navigation = useNavigation();
+  const stateCart = useSelector(state => state.cartState.cart)
+
   //   const stateCart = useSelector(state => state.cart.cart);
 
   //   const BadgeIcon = withBadge(stateCart.length)(Icon);
@@ -154,38 +156,26 @@ const Category = () => {
             <FontAwesomeIcon icon={faThLarge} color="#FEB500" size={26} />
           </TouchableOpacity>
 
-          {/* {stateCart.length !== 0 ? (
-            <BadgeIcon
-              type="FontAwesome5"
-              name="shopping-cart"
-              style={{
-                padding: 8,
-                fontSize: 20,
-                borderRadius: 10,
-                color: '#000',
-              }}
-              onPress={() => navigation.navigate('cart')}
-            />
-          ) : (
-              <TouchableOpacity
+          {stateCart.length !== 0 ? (
+             <TouchableOpacity onPress={() => navigation.navigate('Cart')}> 
+             
+        <Badge value={stateCart.length} status='error' containerStyle={{ position: 'absolute', top: -10, left: 25 }} />
+        <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
+            </TouchableOpacity>
+            ) : ( 
+            <TouchableOpacity
               onPress={() => {
-                navigation.navigate('cart');
-              }}
-              >
-                  <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
-              </TouchableOpacity>
+                navigation.navigate('Cart');
+              }}>
+              <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
+
             
-          )} */}
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('cart');
-            }}>
-            <FontAwesomeIcon icon={faShoppingCart} color="#000" size={26} />
-          </TouchableOpacity>
+            </TouchableOpacity>
+            )} 
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('profile');
+              navigation.navigate('Profile');
             }}>
             <FontAwesomeIcon icon={faUser} color="#000" size={26} />
           </TouchableOpacity>

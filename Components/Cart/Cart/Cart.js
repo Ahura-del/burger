@@ -1,27 +1,39 @@
-import {Button, Icon} from 'native-base';
+import {Button} from 'native-base';
 import React, {Fragment} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {faUser , faShoppingCart , faThLarge, faHome, faHeart, faBell} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+  faUser,
+  faShoppingCart,
+  faThLarge,
+  faHome,
+  faPlus,
+  faBell,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+
+  responsiveFontSize
+} from 'react-native-responsive-dimensions';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import CartItem from './CartItem/CartItem';
+import {useNavigation} from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { Badge} from 'react-native-elements';
 // import {useSelector} from 'react-redux';
 // import {Badge} from '@rneui/themed';
 // import {delNotify} from '../../../Redux';
-library.add(faUser,faShoppingCart,faThLarge,faHome)
+library.add(faUser, faShoppingCart, faThLarge, faHome, faBell,faPlus);
 
-const Cart = ({navigation}) => {
-    const cartState = 2
-    const checkNotify = true
-//   const cartState = useSelector(state => state.cart.cart);
-//   const BadgeIcon = withBadge(cartState.length)(Icon);
-//   const notifySate = useSelector(state => state.notify.notify);
-//   const checkNotify = 'title' in notifySate;
-//   const BadgeIconNotify = withBadge()(Icon);
-
+const Cart = () => {
+  const navigation = useNavigation();
+  // const cartState = "";
+  const stateCart = useSelector(state => state.cartState.cart)
+  //   const notifySate = useSelector(state => state.notify.notify);
+  //   const checkNotify = 'title' in notifySate;
+  //   const BadgeIconNotify = withBadge()(Icon);
   return (
     <Fragment>
-      {cartState.length !== 0 ? (
+      {stateCart.length !== 0 ? (
         <ScrollView style={{backgroundColor: '#000'}}>
           <View
             style={{
@@ -44,13 +56,9 @@ const Cart = ({navigation}) => {
               </Text>
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                <Icon
-                  type="FontAwesome5"
-                  name="heart"
-                  style={{fontSize: 20, marginRight: 15, color: '#FEB500'}}
-                />
+                
 
-                {checkNotify ? (
+                {/* {checkNotify ? (
                   <TouchableOpacity
                     style={{width: 30, height: 30}}
                     onPress={() => {
@@ -66,7 +74,7 @@ const Cart = ({navigation}) => {
                       type="FontAwesome"
                       name="bell"
                       style={{fontSize: 20, color: 'red'}}
-                    /> */}
+                    /> 
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
@@ -78,12 +86,18 @@ const Cart = ({navigation}) => {
                       style={{fontSize: 20, color: '#FEB500'}}
                     />
                   </TouchableOpacity>
-                )}
+                )} */}
+                <View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Notification')}>
+                    <FontAwesomeIcon icon={faBell} color="#333" size={22} />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
 
-            {/* <View style={{marginTop: 40, marginLeft: 'auto'}}>
-              {cartState.map(item => (
+            <View style={{marginTop: 40, marginLeft: 'auto'}}>
+              {stateCart.map(item => (
                 <CartItem
                   key={item.id}
                   pic={item.pic}
@@ -93,17 +107,16 @@ const Cart = ({navigation}) => {
                   count={item.count}
                 />
               ))}
-            </View> */}
+            </View>
 
             <View
               style={{width: '80%', marginLeft: 'auto', marginRight: 'auto'}}>
               <Button
-                block
-                warning
+                size="lg" style={{backgroundColor:'#FEB500'}} 
                 onPress={() => {
-                  navigation.navigate('checkOut');
+                  navigation.navigate('Checkout');
                 }}>
-                <Text style={{fontFamily: 'Poppins'}}>Check Out</Text>
+                <Text style={{color:"#000", fontFamily: 'Poppins', textAlign:"center" , fontSize: responsiveFontSize(2)}}>Check Out</Text>
               </Button>
             </View>
           </View>
@@ -119,8 +132,10 @@ const Cart = ({navigation}) => {
               marginLeft: 'auto',
               alignItems: 'center',
               flex: 1,
+              
             }}>
-            <View
+            <TouchableOpacity
+            onPress={()=>navigation.navigate('SubCategory')}
               style={{
                 width: '100%',
                 backgroundColor: '#000',
@@ -130,22 +145,35 @@ const Cart = ({navigation}) => {
                 borderWidth: 3,
                 borderColor: '#FEB500',
                 borderRadius: 20,
+                
               }}>
+                <View 
+                
+                >
+
               <Text
                 style={{
                   textAlign: 'center',
                   paddingBottom: 20,
                   color: '#FEB500',
                   fontSize: 20,
+                
                 }}>
                 Add Food ...
               </Text>
-              <Icon
+            
+                <Text  style={{textAlign:"center"}}>
+
+              <FontAwesomeIcon icon={faPlus} color="#FEB500" size={50} />
+                </Text>
+             
+                  </View>
+              {/* <Icon
                 type="FontAwesome5"
                 name="plus"
                 style={{textAlign: 'center', color: '#FEB500', fontSize: 60}}
-              />
-            </View>
+              /> */}
+            </TouchableOpacity>
           </View>
         </View>
       )}
@@ -154,19 +182,19 @@ const Cart = ({navigation}) => {
         <View
           style={{
             width: '100%',
-            paddingVertical:10,
-            alignItems:"center",
+            paddingVertical: 5,
+            alignItems: 'center',
             justifyContent: 'space-around',
             flexDirection: 'row',
             // paddingTop: 12,
             // paddingBottom: 12,
           }}>
-              <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('home');
-      }}>
-               <FontAwesomeIcon icon={faHome} color='black' size={26} />
-               </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Home');
+            }}>
+            <FontAwesomeIcon icon={faHome} color="#000" size={26} />
+          </TouchableOpacity>
           {/* <Icon
             type="FontAwesome5"
             name="home"
@@ -181,11 +209,11 @@ const Cart = ({navigation}) => {
             }}
           /> */}
           <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('category');
-      }}>
-     <FontAwesomeIcon icon={faThLarge} color='black' size={26} />
-     </TouchableOpacity>
+            onPress={() => {
+              navigation.navigate('Category');
+            }}>
+            <FontAwesomeIcon icon={faThLarge} color="#000" size={26} />
+          </TouchableOpacity>
           {/* <Icon
             type="FontAwesome5"
             name="th-large"
@@ -214,24 +242,33 @@ const Cart = ({navigation}) => {
               onPress={() => navigation.navigate('cart')}
             />
             ) : (*/}
-            
+
+{stateCart.length !== 0 ? (
+             <TouchableOpacity style={{padding: 10,
+
+              fontSize: 20,
+              borderRadius: 10,
+              backgroundColor: '#000',}} onPress={() => navigation.navigate('Cart')}> 
+             
+        <Badge value={stateCart.length} status='error' containerStyle={{ position: 'absolute', top: -5, left: 40 }} />
+        <FontAwesomeIcon icon={faShoppingCart} color="#FEB500" size={26} />
+            </TouchableOpacity>
+            ) : ( 
             <TouchableOpacity
-        onPress={() => {
-            navigation.navigate('cart');
+            style={{padding: 10,
+
+              fontSize: 20,
+              borderRadius: 10,
+              backgroundColor: '#000',}}
+              onPress={() => {
+                navigation.navigate('Cart');
+              }}>
+              <FontAwesomeIcon icon={faShoppingCart} color="#FEB500" size={26} />
+
             
-        }}
-        style={{
-            padding: 10,
-            
-            fontSize: 20,
-            borderRadius: 10,
-            // color: '#FEB500',
-            backgroundColor: '#000',
-          }}
-        >
-                    <FontAwesomeIcon icon={faShoppingCart} color='#FEB500' size={26} />
-                    </TouchableOpacity>
-            {/* <Icon
+            </TouchableOpacity>
+            )} 
+          {/* <Icon
               type="FontAwesome5"
               name="shopping-cart"
               style={{
@@ -246,14 +283,12 @@ const Cart = ({navigation}) => {
               }}
             />
           )}  */}
-<TouchableOpacity
- onPress={() => {
-    navigation.navigate('profile');
-  }}
->
-<FontAwesomeIcon icon={faUser} color='black' size={26} />
-
-</TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Profile');
+            }}>
+            <FontAwesomeIcon icon={faUser} color="#000" size={26} />
+          </TouchableOpacity>
           {/* <Icon
             type="FontAwesome"
             name="user"

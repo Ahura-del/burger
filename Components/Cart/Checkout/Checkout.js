@@ -1,27 +1,42 @@
-import {Button, Icon} from 'native-base';
+import {Button, Toast} from 'native-base';
 import React, {Fragment} from 'react';
 import {View, Text, ScrollView, FlatList, TouchableOpacity} from 'react-native';
 import CheckOutAddress from './CheckOutAddress/CheckOutAddress';
 import CheckOutItem from './CheckOutItem/CheckOutItem';
 import CheckOutPayment from './CheckOutPayment/CheckOutPayment';
 import OrderList from './OrderList/OrderList';
-// import {useSelector, useDispatch} from 'react-redux';
-// import {delNotify} from '../../../Redux';
-import {useState} from 'react';
-import {useEffect} from 'react';
-// import {v4 as uuidv4} from 'uuid';
+import {useDispatch, useSelector} from 'react-redux';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+  faUser,
+  faShoppingCart,
+  faThLarge,
+  faHome,
+  faHamburger,
+  faPlus,
+  faBell,
+} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
-// import {withBadge} from 'react-native-elements';
-// import axios from 'axios';
-// import {Linking} from 'react-native';
-const CheckOut = ({navigation}) => {
-  const list = useSelector(state => state.cart.cart);
+library.add(
+  faPlus,
+  faBell,
+  faHamburger,
+  faUser,
+  faShoppingCart,
+  faThLarge,
+  faHome,
+  faHamburger,
+  faPlus,
+  faBell,
+);
+import {useNavigation} from '@react-navigation/native';
+import { delAllCart } from '../../../Redux';
 
-  const notifySate = useSelector(state => state.notify.notify);
-  const checkNotify = 'title' in notifySate;
-  const BadgeIconNotify = withBadge()(Icon);
-  const dispatch = useDispatch();
-
+const Checkout = () => {
+  const navigation = useNavigation();
+  const list = useSelector(state => state.cartState.cart);
+  const dispatch = useDispatch()
   function sumPrice(input) {
     let total = 0;
     for (let i = 0; i < input.length; i++) {
@@ -30,24 +45,25 @@ const CheckOut = ({navigation}) => {
     return total;
   }
 
-  const request = {
-    merchant_id: 'f042801a-f79d-11e6-8df1-005056a205be',
-    amount: 1000,
-    description: 'hi',
-    callback_url: 'http://redreseller.com/verify',
-  };
+  //   const request = {
+  //     merchant_id: 'f042801a-f79d-11e6-8df1-005056a205be',
+  //     amount: 1000,
+  //     description: 'hi',
+  //     callback_url: 'http://redreseller.com/verify',
+  //   };
 
   const payBtn = () => {
-    axios
-      .post('https://api.zarinpal.com/pg/v4/payment/request.json', request)
-      .then(res => {
-        if (res.data.data.message === 'Success') {
-          Linking.openURL(
-            `https://www.zarinpal.com/pg/StartPay/${res.data.data.authority}`,
-          );
-        }
-      })
-      .catch(err => console.log(err));
+    Toast.show({
+      title: 'Your payment was successful',
+      duration: 3000,
+      bg: 'green.600',
+      placement: 'bottom',
+      variant: 'solid',
+    });
+    setTimeout(()=>{
+      navigation.navigate('Home')
+      dispatch(delAllCart())
+    },2000)
   };
 
   return (
@@ -83,13 +99,7 @@ const CheckOut = ({navigation}) => {
                     flexDirection: 'row',
                     justifyContent: 'space-around',
                   }}>
-                  <Icon
-                    type="FontAwesome5"
-                    name="heart"
-                    style={{fontSize: 20, marginRight: 15, color: '#FEB500'}}
-                  />
-
-                  {checkNotify ? (
+                  {/* {checkNotify ? (
                     <TouchableOpacity
                       style={{width: 30, height: 30}}
                       onPress={() => {
@@ -116,7 +126,13 @@ const CheckOut = ({navigation}) => {
                         style={{fontSize: 20, color: '#FEB500'}}
                       />
                     </TouchableOpacity>
-                  )}
+                  )} */}
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('Notification')}>
+                      <FontAwesomeIcon icon={faBell} color="#333" size={22} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
 
@@ -131,12 +147,12 @@ const CheckOut = ({navigation}) => {
                   <FlatList
                     data={list}
                     keyExtractor={item => item.id}
-                    renderItem={({item}) => <CheckOutItem data={item} />}
+                    renderItem={({item}) => (<CheckOutItem data={item} />)}
                   />
                 </View>
               ) : (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('category')}>
+                  onPress={() => navigation.navigate('SubCategory')}>
                   <View
                     style={{
                       justifyContent: 'center',
@@ -157,11 +173,12 @@ const CheckOut = ({navigation}) => {
                       }}>
                       Add Meal ...
                     </Text>
-                    <Icon
+                    <FontAwesomeIcon icon={faPlus} color="#FEB500" />
+                    {/* <Icon
                       type="FontAwesome5"
                       name="plus"
                       style={{color: '#FEB500'}}
-                    />
+                    /> */}
                   </View>
                 </TouchableOpacity>
               )}
@@ -247,11 +264,12 @@ const CheckOut = ({navigation}) => {
                     alignItems: 'center',
                     marginBottom: 15,
                   }}>
-                  <Icon
+                  <FontAwesomeIcon icon={faHamburger} color="#FEB500" />
+                  {/* <Icon
                     type="FontAwesome5"
                     name="hamburger"
                     style={{color: '#FEB500'}}
-                  />
+                  /> */}
                   <Text
                     style={{
                       color: '#FEB500',
@@ -298,7 +316,10 @@ const CheckOut = ({navigation}) => {
                 marginVertical: 50,
               }}>
               {list.length != 0 ? (
-                <Button block warning onPress={payBtn}>
+                <Button
+                  size="lg"
+                  style={{backgroundColor: '#FEB500'}}
+                  onPress={payBtn}>
                   <Text
                     style={{
                       fontFamily: 'Poppins',
@@ -309,12 +330,13 @@ const CheckOut = ({navigation}) => {
                   </Text>
                 </Button>
               ) : (
-                <Button block disabled>
+                <Button  style={{backgroundColor: '#ccc'}} isDisabled>
                   <Text
                     style={{
                       fontFamily: 'Poppins',
                       fontSize: 16,
                       fontWeight: '200',
+                      color: '#fdfdfd'
                     }}>
                     Place Order
                   </Text>
@@ -331,66 +353,46 @@ const CheckOut = ({navigation}) => {
             width: '100%',
             justifyContent: 'space-around',
             flexDirection: 'row',
-            paddingTop: 5,
-            paddingBottom: 5,
+            paddingVertical: 5,
+            alignItems: 'center',
           }}>
-          <Icon
-            type="FontAwesome5"
-            name="home"
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Home');
+            }}>
+            <FontAwesomeIcon icon={faHome} color="#000" size={26} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Category');
+            }}>
+            <FontAwesomeIcon icon={faThLarge} color="#000" size={26} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
             style={{
+              padding: 10,
               fontSize: 20,
-              padding: 8,
               borderRadius: 10,
-              color: '#000',
-            }}
-            onPress={() => {
-              navigation.navigate('home');
-            }}
-          />
-          <Icon
-            type="FontAwesome5"
-            name="th-large"
-            style={{
-              padding: 8,
-              fontSize: 20,
-              borderRadius: 10,
-              color: '#000',
-            }}
-            onPress={() => {
-              navigation.navigate('category');
-            }}
-          />
-          <Icon
-            onPress={() => {
-              navigation.navigate('cart');
-            }}
-            type="FontAwesome5"
-            name="shopping-cart"
-            style={{
               backgroundColor: '#000',
-              padding: 8,
-              fontSize: 20,
-              borderRadius: 10,
-              color: '#FEB500',
             }}
-          />
-          <Icon
             onPress={() => {
-              navigation.navigate('profile');
-            }}
-            type="FontAwesome"
-            name="user"
-            style={{
-              padding: 8,
-              fontSize: 20,
-              borderRadius: 10,
-              color: '#000',
-            }}
-          />
+              navigation.navigate('Cart');
+            }}>
+            <FontAwesomeIcon icon={faShoppingCart} color="#FEB500" size={26} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Profile');
+            }}>
+            <FontAwesomeIcon icon={faUser} color="#000" size={26} />
+          </TouchableOpacity>
         </View>
       </View>
     </Fragment>
   );
 };
 
-export default CheckOut;
+export default Checkout;
