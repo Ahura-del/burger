@@ -82,7 +82,7 @@ const Profile = () => {
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
 
-    if (password == '') {
+    if (password === '') {
       Toast.show({
         title: 'Please enter your password!',
         bg: 'red.600',
@@ -95,6 +95,9 @@ const Profile = () => {
       axios
         .delete(`${window.api}/auth/${userId}`, {
           headers: {Authorization: 'Bearer ' + token},
+          data:{
+            delPass:password
+          }
         })
         .then(res => {
           if (res.status === 200) {
