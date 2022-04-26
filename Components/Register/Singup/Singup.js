@@ -18,7 +18,7 @@ const SingUp = () => {
       Toast.show({
         title: 'Please connect to the internet',
         bg: 'yellow.500',
-        placement: 'top',
+        placement: 'bottom',
         duration: 2000,
         variant: 'solid',
       });
@@ -29,7 +29,7 @@ const SingUp = () => {
       Toast.show({
         title: 'Please Fill All Fields',
         bg: 'red.600',
-        placement: 'top',
+        placement: 'bottom',
         duration: 2000,
         variant: 'solid',
       });
@@ -39,7 +39,7 @@ const SingUp = () => {
       Toast.show({
         title: 'Please Enter Password With 6 Character',
         bg: 'red.600',
-        placement: 'top',
+        placement: 'bottom',
         duration: 2000,
         variant: 'solid',
       });
