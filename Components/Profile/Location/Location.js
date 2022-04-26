@@ -11,7 +11,7 @@ const Shipping = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
-  const location = JSON.parse(route.params.user.location);
+  const location = route.params.user.location && JSON.parse(route.params.user.location);
   const [city, setCity] = useState(location.city);
   const [address, setAddress] = useState(location.address);
   const [appartment, setAppartment] = useState(location.appartment);

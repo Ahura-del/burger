@@ -116,8 +116,8 @@ const App = () => {
                       name="EmailRestPass"
                       component={storage ? Preloader : EmailRestPass}
                     />
-                    <Stack.Screen name="Preloader" component={Preloader} />
-                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen options={{gestureEnabled:false}} name="Preloader" component={Preloader} />
+                    <Stack.Screen options={{gestureEnabled:false}} name="Home" component={Home} />
                     <Stack.Screen
                       name="Notification"
                       component={Notification}
