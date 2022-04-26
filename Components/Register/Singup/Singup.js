@@ -188,7 +188,7 @@ const SingUp = () => {
           />
         </View>
 
-        <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'center' ,marginBottom:50 }}>
           <Button
             size="lg"
             style={{backgroundColor: '#FEB500'}}
@@ -196,7 +196,7 @@ const SingUp = () => {
             <Text
               style={{
                 fontFamily: 'Poppins',
-                fontSize: responsiveScreenFontSize(2),
+                fontSize: responsiveScreenFontSize(1.8),
                 color: '#000',
                 fontWeight: '500',
               }}>
@@ -205,7 +205,7 @@ const SingUp = () => {
           </Button>
         </View>
 
-        <View style={{marginTop: 10}}>
+        <View>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Login');
@@ -215,7 +215,7 @@ const SingUp = () => {
                 color: '#fff',
                 fontFamily: 'Poppins',
                 textAlign: 'center',
-                fontSize: responsiveScreenFontSize(2),
+                fontSize: responsiveScreenFontSize(1.5),
               }}>
               Have Account?
             </Text>

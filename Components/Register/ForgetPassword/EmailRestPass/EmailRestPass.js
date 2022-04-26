@@ -110,13 +110,13 @@ const Password = () => {
           <View style={{alignItems: 'center', marginTop: 100}}>
             <Button
               size="md"
-              style={{backgroundColor: '#FEB500', width: 120, height: 45}}
+              style={{backgroundColor: '#FEB500'}}
               onPress={sendCode}>
               <Text
                 style={{
                   fontFamily: 'Poppins',
                   color: '#000',
-                  fontSize: responsiveScreenFontSize(2),
+                  fontSize: responsiveScreenFontSize(1.8),
                 }}>
                 Send Code
               </Text>

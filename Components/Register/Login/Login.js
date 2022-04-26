@@ -149,7 +149,7 @@ const Login = () => {
               onChangeText={e => setPassword(e)}
             />
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center' }}>
             <Button
               size="md"
               style={{backgroundColor: '#FEB500', width: 120, height: 45}}
@@ -158,7 +158,7 @@ const Login = () => {
                 style={{
                   fontFamily: 'Poppins',
                   color: '#000',
-                  fontSize: responsiveScreenFontSize(2),
+                  fontSize: responsiveScreenFontSize(1.8),
                 }}>
                 Sing in
               </Text>
@@ -178,7 +178,7 @@ const Login = () => {
                   style={{
                     color: '#fff',
                     paddingVertical: 20,
-                    fontSize: responsiveScreenFontSize(1.7),
+                    fontSize: responsiveScreenFontSize(1.5),
                   }}>
                   Rest your Password
                 </Text>

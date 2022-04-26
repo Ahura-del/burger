@@ -18,7 +18,8 @@ const PopularMeal = props => {
       style={{
         backgroundColor: '#FEB500',
         width: '45%',
-        height: '85%',
+        // height: '85%',
+        height:responsiveHeight(26),
         position: 'relative',
         borderRadius: 10,
       }}>
@@ -35,7 +36,7 @@ const PopularMeal = props => {
         }}
       />
 
-      <View style={{marginTop: 70, paddingLeft: 10}}>
+      <View style={{marginTop: 50, paddingLeft: 10}}>
         <TouchableOpacity onPress={props.mealDitail}>
           <Text style={{fontSize: responsiveFontSize(2), color: '#000'}}>
             {props.name}
@@ -43,7 +44,7 @@ const PopularMeal = props => {
           <Text
             style={{
               fontSize: responsiveFontSize(1.3),
-              marginVertical: 10,
+              marginVertical: 5,
               color: '#000',
             }}>
             {props.desc}

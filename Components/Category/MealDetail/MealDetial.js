@@ -123,15 +123,16 @@ const MealDetail = () => {
             }}
           />
 
-          <View style={{marginTop: 170, paddingLeft: 10, paddingRight: 60}}>
+          <View style={{marginTop: 150, paddingLeft: 10, paddingRight: 60}}>
             <Heading size="md" style={{fontSize: 26}}>
               {route.params.item.name}
             </Heading>
             <Text
               style={{
-                fontSize: responsiveFontSize(1.9),
+                fontSize: responsiveFontSize(1.7),
                 fontWeight: '400',
                 marginVertical: 20,
+                
               }}>
               {route.params.item.info}
             </Text>
@@ -140,7 +141,7 @@ const MealDetail = () => {
               size="lg"
               style={{
                 marginTop: 10,
-                fontSize: responsiveFontSize(3.5),
+                fontSize: responsiveFontSize(3.0),
                 fontWeight: '600',
               }}>
               ${route.params.item.price}
@@ -182,7 +183,7 @@ const MealDetail = () => {
           </BoxShadow>
         </View>
 
-        <View style={{marginTop: 30}}>
+        <View style={{marginTop: 50}}>
           {data.map((item, ind) => (
             <View
               key={ind}

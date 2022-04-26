@@ -17,7 +17,8 @@ const ItemSubCategory = props => {
       style={{
         backgroundColor: '#FEB500',
         width: '44%',
-        height: 170,
+        // height: 200,
+        height:responsiveHeight(28),
         position: 'relative',
         zIndex: 10,
         borderRadius: 10,

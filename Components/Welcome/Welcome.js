@@ -14,19 +14,19 @@ const Welcome = () => {
   };
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled>
+        <WelcomePages
+        image={require('../../assets/Image/welcome1.png')}
+        header="Delivery Address"
+        title1="Start your order by typing "
+        title2="your address"
+        setDelivery={setDelivery}
+        setSingin={setSingin}
+      />
       <WelcomePages
         image={require('../../assets/Image/welcome2.png')}
         header="Customised Burger"
         title1="Customised your Pizza through the"
         title2="Burger Maker tool"
-        setDelivery={setDelivery}
-        setSingin={setSingin}
-      />
-      <WelcomePages
-        image={require('../../assets/Image/welcome1.png')}
-        header="Delivery Address"
-        title1="Start your order by typing "
-        title2="your address"
         setDelivery={setDelivery}
         setSingin={setSingin}
       />

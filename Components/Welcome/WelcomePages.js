@@ -30,8 +30,8 @@ const WelcomePages = ({
               style={{
                 color: '#fff',
                 fontFamily: 'Poppins',
-                marginVertical: 20,
-                fontSize: responsiveScreenFontSize(3),
+                marginBottom:18,
+                fontSize: responsiveScreenFontSize(2.5),
                 textAlign: 'center',
               }}>
               {header}
@@ -40,7 +40,7 @@ const WelcomePages = ({
               style={{
                 color: '#fff',
                 fontFamily: 'Poppins',
-                fontSize: responsiveScreenFontSize(1.8),
+                fontSize: responsiveScreenFontSize(1.3),
                 textAlign: 'center',
               }}>
               {title1}
@@ -49,7 +49,7 @@ const WelcomePages = ({
               style={{
                 color: '#fff',
                 fontFamily: 'Poppins',
-                fontSize: responsiveScreenFontSize(1.5),
+                fontSize: responsiveScreenFontSize(1.3),
                 textAlign: 'center',
               }}>
               {' '}
