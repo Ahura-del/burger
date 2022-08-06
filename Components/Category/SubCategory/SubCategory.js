@@ -210,7 +210,7 @@ const SubCategory = () => {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('profile');
+              navigation.navigate('Profile');
             }}>
             <FontAwesomeIcon icon={faUser} color="#000" size={26} />
           </TouchableOpacity>

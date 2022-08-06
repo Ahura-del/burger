@@ -7,10 +7,10 @@ const Welcome = () => {
   const navigation = useNavigation();
 
   const setDelivery = () => {
-    navigation.navigate('Singup');
+    navigation.navigate('notRegister');
   };
   const setSingin = () => {
-    navigation.navigate('Login');
+    navigation.navigate('notRegister');
   };
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled>

@@ -191,7 +191,7 @@ const Profile = () => {
                   resizeMode="cover"
                   style={{width: '100%', height: '100%', borderRadius: 100}}
                 />
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() =>
                     navigation.navigate('UpdateProfile', {
                       user: getUser,
@@ -207,7 +207,7 @@ const Profile = () => {
                     right: 15,
                   }}>
                   <FontAwesomeIcon icon={faPencilAlt} color="#555" />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
             <View
@@ -224,11 +224,13 @@ const Profile = () => {
                   color: '#FEB500',
                   marginBottom: 10,
                 }}>
-                {getUser.name}
+                {/* {getUser.name} */}
+                Ahura 
               </Text>
 
               <Text style={{fontFamily: 'Poppins', color: '#fff'}}>
-                {getUser.email}
+                {/* {getUser.email} */}
+                ahuradelnava@gmail.com
               </Text>
             </View>
           </View>
@@ -254,9 +256,10 @@ const Profile = () => {
                 }}>
                 <TouchableOpacity
                   style={{padding: 15}}
-                  onPress={() => {
-                    navigation.navigate('ProfileLocation', {user: getUser});
-                  }}>
+                  // onPress={() => {
+                  //   navigation.navigate('ProfileLocation', {user: getUser});
+                  // }}
+                >
                   <Text style={{fontFamily: 'Poppins'}}>Location</Text>
                 </TouchableOpacity>
                 <View
@@ -268,9 +271,10 @@ const Profile = () => {
 
                 <TouchableOpacity
                   style={{padding: 15}}
-                  onPress={() => {
-                    navigation.navigate('ChangePass');
-                  }}>
+                  // onPress={() => {
+                  //   navigation.navigate('ChangePass');
+                  // }}
+                >
                   <Text style={{fontFamily: 'Poppins'}}>Change Password</Text>
                 </TouchableOpacity>
                 <View
@@ -283,7 +287,8 @@ const Profile = () => {
                   style={{padding: 15}}
                   onPress={() => {
                     navigation.navigate('Payment');
-                  }}>
+                  }}
+                >
                   <Text style={{fontFamily: 'Poppins'}}>Payment</Text>
                 </TouchableOpacity>
                 <View
@@ -359,7 +364,7 @@ const Profile = () => {
                       <Button
                         size="lg"
                         style={{backgroundColor: 'red'}}
-                        onPress={removeAccount}>
+                        onPress={logOut}>
                         <Text style={{color: '#fff', fontFamily: 'Poppins'}}>
                           Remove
                         </Text>

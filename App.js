@@ -7,15 +7,17 @@ import Singup from './Components/Register/Singup/Singup';
 import Login from './Components/Register/Login/Login';
 import RestPass from './Components/Register/ForgetPassword/ForgetPassword';
 import EmailRestPass from './Components/Register/ForgetPassword/EmailRestPass/EmailRestPass';
-import Home from './Components/Home/Home';
 import Verification from './Components/Register/Verification/Verification';
+import Location from './Components/Location/Location';
+import NewLocation from './Components/Location/NewLocation/NewLocation';
+
+import NotRegister from './Components/Register/NotRegister/NotRegister';
+import Home from './Components/Home/Home';
 import MealDetail from './Components/Category/MealDetail/MealDetial';
 import Profile from './Components/Profile/Profile';
 import UpdateProfile from './Components/Profile/UpdateProfile/UpdateProfile';
 import ChangePass from './Components/Profile/ChangePass/ChangePass';
 import ProfileLocation from './Components/Profile/Location/Location';
-import Location from './Components/Location/Location';
-import NewLocation from './Components/Location/NewLocation/NewLocation';
 import Preloader from './Components/Preloader/Preloader';
 import Category from './Components/Category/Category';
 import SubCategory from './Components/Category/SubCategory/SubCategory';
@@ -88,19 +90,19 @@ const App = () => {
                       name="Welcome"
                       component={storage ? Preloader : Welcome}
                     />
-                    <Stack.Screen
+                    {/* <Stack.Screen
                       name="Singup"
                       component={storage ? Preloader : Singup}
-                    />
-                    <Stack.Screen
+                    /> */}
+                    {/* <Stack.Screen
                       name="Login"
                       component={storage ? Preloader : Login}
-                    />
-                    <Stack.Screen
+                    /> */}
+                    {/* <Stack.Screen
                       name="Verification"
                       component={storage ? Preloader : Verification}
-                    />
-                    <Stack.Screen
+                    /> */}
+                    {/* <Stack.Screen
                       name="Location"
                       component={storage ? Preloader : Location}
                     />
@@ -115,7 +117,9 @@ const App = () => {
                     <Stack.Screen
                       name="EmailRestPass"
                       component={storage ? Preloader : EmailRestPass}
-                    />
+                    /> */}
+                        
+                        <Stack.Screen name='notRegister' component={NotRegister} />
                     <Stack.Screen options={{gestureEnabled:false}} name="Preloader" component={Preloader} />
                     <Stack.Screen options={{gestureEnabled:false}} name="Home" component={Home} />
                     <Stack.Screen
